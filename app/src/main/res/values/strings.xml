@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Theo dõi hoạt động thể chất</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_Health">Sức khoẻ</string>
+    <string name="title_Exercise">Rèn luyện</string>
+    <string name="title_LeaveNotice">Báo nghỉ</string>
+    <string name="title_Subject">Học phần thể chất</string>
+    <string name="title_Settings">Cài đặt</string>
 </resources>
