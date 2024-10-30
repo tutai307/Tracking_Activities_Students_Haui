@@ -1,16 +1,15 @@
-package com.example.trackingactivitesstudent.ui.notifications;
+package com.example.trackingactivitesstudent.ui.subject;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class NotificationsViewModel extends ViewModel {
-
+public class SubjectViewModel extends ViewModel {
     private final MutableLiveData<String> mText;
 
-    public NotificationsViewModel() {
+    public SubjectViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is notifications fragment");
+        mText.setValue("Trang cài đặt");
     }
 
     public LiveData<String> getText() {
