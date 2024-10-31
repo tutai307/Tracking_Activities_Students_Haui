@@ -3,12 +3,12 @@
 
     <item
         android:id="@+id/navigation_health"
-        android:icon="@drawable/ic_home_black_24dp"
+        android:icon="@drawable/baseline_health_and_safety_24"
         android:title="@string/title_Health" />
 
     <item
         android:id="@+id/navigation_exercise"
-        android:icon="@drawable/ic_dashboard_black_24dp"
+        android:icon="@drawable/baseline_sports_gymnastics_24"
         android:title="@string/title_Exercise" />
 
     <item
@@ -17,7 +17,6 @@
         android:title="@string/title_LeaveNotice" />
     <item
         android:id="@+id/navigation_subject"
-        android:icon="@drawable/ic_notifications_black_24dp"
-        android:title="@string/title_LeaveNotice" />
-
+        android:icon="@drawable/baseline_subject_24"
+        android:title="@string/title_Subject" />
 </menu>
