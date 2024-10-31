@@ -15,7 +15,6 @@ import android.widget.TextView;
 
 import com.example.trackingactivitesstudent.R;
 import com.example.trackingactivitesstudent.databinding.FragmentSubjectBinding;
-import com.example.trackingactivitesstudent.ui.leave.LeaveViewModel;
 
 public class SubjectFragment extends Fragment {
 
@@ -23,8 +22,8 @@ public class SubjectFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        LeaveViewModel leaveViewModel =
-                new ViewModelProvider(this).get(LeaveViewModel.class);
+        SubjectViewModel leaveViewModel =
+                new ViewModelProvider(this).get(SubjectViewModel.class);
 
         binding = FragmentSubjectBinding.inflate(inflater, container, false);
         View root = binding.getRoot();

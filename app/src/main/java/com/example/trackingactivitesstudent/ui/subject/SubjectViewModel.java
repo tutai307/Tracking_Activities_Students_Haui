@@ -9,7 +9,7 @@ public class SubjectViewModel extends ViewModel {
 
     public SubjectViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("Trang cài đặt");
+        mText.setValue("Trang học phần thể chất");
     }
 
     public LiveData<String> getText() {
