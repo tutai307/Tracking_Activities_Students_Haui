@@ -18,14 +18,9 @@ public class ExerciseFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        ExerciseViewModel exerciseViewModel =
-                new ViewModelProvider(this).get(ExerciseViewModel.class);
-
         binding = FragmentExerciseBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textDashboard;
-        exerciseViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
 
