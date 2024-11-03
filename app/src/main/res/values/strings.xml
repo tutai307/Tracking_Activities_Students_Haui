@@ -4,5 +4,6 @@
     <string name="title_Exercise">Rèn luyện</string>
     <string name="title_LeaveNotice">Báo nghỉ</string>
     <string name="title_Subject">Học phần thể chất</string>
-    <string name="title_Settings">Cài đặt</string>
+    <string name="title_Settings">Thông tin cá nhân</string>
+    <string name="title_Calendar">Thời khóa biểu</string>
 </resources>
