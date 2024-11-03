@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/rounded_background"
+    android:padding="16dp">
+
+    <!-- Title and Close Button Row -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="16dp">
+
+        <TextView
+            android:id="@+id/titleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Thông tin cá nhân"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/closeButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="X"
+            android:layout_alignParentEnd="true"
+            android:background="?android:attr/selectableItemBackground"
+            android:textColor="@android:color/black" />
+    </RelativeLayout>
+
+    <!-- Subtitle and Update Button -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingBottom="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="THẺ CĂN CƯỚC CÔNG DÂN"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_weight="1"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CẬP NHẬT"
+            android:background="?android:attr/selectableItemBackground"
+            android:textColor="@color/blue" />
+    </LinearLayout>
+
+    <!-- Information Section with Label and Value Rows -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="413dp"
+        android:background="@drawable/rounded_background"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Information Row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="8dp"
+            android:weightSum="3">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Mã sinh viên"
+                android:textColor="@android:color/darker_gray" />
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="YMP241978594"
+                android:layout_weight="2"
+                android:background="@drawable/rounded_input_background"
+                android:minHeight="48dp"/>
+        </LinearLayout>
+
+        <!-- Repeat for each information row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="8dp"
+            android:weightSum="3">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Họ và tên"
+                android:textColor="@android:color/darker_gray" />
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Nguyễn Đức Chung"
+                android:layout_weight="2"
+                android:background="@drawable/rounded_input_background"
+                android:minHeight="48dp"/>
+
+        </LinearLayout>
+
+        <!-- Thêm các dòng tương tự cho các trường khác -->
+        <!-- Điện thoại -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="8dp"
+            android:weightSum="3">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Điện thoại"
+                android:textColor="@android:color/darker_gray" />
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="0913 297 548"
+                android:layout_weight="2"
+                android:background="@drawable/rounded_input_background"
+                android:minHeight="48dp"/>
+        </LinearLayout>
+
+        <!-- Ngày sinh -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="8dp"
+            android:weightSum="3">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Ngày sinh"
+                android:textColor="@android:color/darker_gray" />
+
+            <EditText
+                android:id="@+id/birthDateEditText"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="wrap_content"
+                android:text="26/02/2003"
+                android:background="@drawable/rounded_input_background"
+                android:drawableEnd="@drawable/ic_calendar"
+                android:focusable="false"
+                android:hint="Chọn ngày"
+                android:minHeight="48dp"/> <!-- Placeholder -->
+        </LinearLayout>
+
+        <!-- Giới tính -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="8dp"
+            android:weightSum="3">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="Giới tính"
+                android:textColor="@android:color/darker_gray" />
+
+            <RadioGroup
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <RadioButton
+                    android:id="@+id/radioButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Nam"
+                    android:checked="true"/>
+                <RadioButton
+                    android:id="@+id/radioButton1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Nữ" />
+            </RadioGroup>
+        </LinearLayout>
+
+        <!-- Các trường khác có thể lặp lại theo cách tương tự -->
+    </LinearLayout>
+
+    <!-- Action Buttons Row -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="16dp"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/btnDong"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/gray"
+            android:text="Đóng" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Sửa thông tin"
+            android:layout_margin="5dp"
+            android:backgroundTint="@color/blue" />
+    </LinearLayout>
+</LinearLayout>

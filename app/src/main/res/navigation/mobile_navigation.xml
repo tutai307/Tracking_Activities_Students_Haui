@@ -28,4 +28,17 @@
         android:name="com.example.trackingactivitesstudent.ui.subject.SubjectFragment"
         android:label="@string/title_Subject"
         tools:layout="@layout/fragment_subject" />
+
+    <fragment
+        android:id="@+id/navigation_userinfo"
+        android:name="com.example.trackingactivitesstudent.ui.userinfo.UserInfoFragment"
+        android:label="@string/title_Settings"
+        tools:layout="@layout/fragment_user_info" />
+
+    <fragment
+        android:id="@+id/navigation_calendar"
+        android:name="com.example.trackingactivitesstudent.ui.calendar.CalendarFragment"
+        android:label="@string/title_Calendar"
+        tools:layout="@layout/fragment_calendar" />
+
 </navigation>
