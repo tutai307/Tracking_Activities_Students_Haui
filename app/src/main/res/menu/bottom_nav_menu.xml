@@ -19,4 +19,9 @@
         android:id="@+id/navigation_subject"
         android:icon="@drawable/baseline_subject_24"
         android:title="@string/title_Subject" />
+
+    <item
+        android:id="@+id/navigation_userinfo"
+        android:icon="@drawable/baseline_person_24"
+        android:title="@string/title_Settings" />
 </menu>
