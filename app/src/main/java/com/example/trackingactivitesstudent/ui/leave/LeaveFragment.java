@@ -18,8 +18,7 @@ public class LeaveFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        LeaveViewModel leaveViewModel =
-                new ViewModelProvider(this).get(LeaveViewModel.class);
+        LeaveViewModel leaveViewModel = new ViewModelProvider(requireActivity()).get(LeaveViewModel.class);
 
         binding = FragmentLeaveNoticeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
