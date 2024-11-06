@@ -23,8 +23,8 @@ public class LeaveFragment extends Fragment {
         binding = FragmentLeaveNoticeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textLeave;
-        leaveViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+//        final TextView textView = binding.textLeave;
+//        leaveViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
 
