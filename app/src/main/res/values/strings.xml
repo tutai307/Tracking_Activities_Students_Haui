@@ -6,4 +6,6 @@
     <string name="title_Subject">Học phần thể chất</string>
     <string name="title_Settings">Thông tin cá nhân</string>
     <string name="title_Calendar">Thời khóa biểu</string>
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
