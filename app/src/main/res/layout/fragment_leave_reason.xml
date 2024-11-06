@@ -7,106 +7,56 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:background="@drawable/rounded_edit_text"
         android:orientation="vertical"
         android:padding="16dp">
 
         <TextView
-            android:id="@+id/txvCourseName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Phát triển ứng dụng cho thiết bị di động"
+            android:text="Lý do:"
             android:textColor="#333"
-            android:textSize="16sp"
+            android:textSize="20sp"
             android:textStyle="bold" />
 
-        <LinearLayout
+        <EditText
+            android:id="@+id/edtReason"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingVertical="4dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Tiết: "
-                android:textColor="#333"
-                android:textSize="16sp" />
-
-            <TextView
-                android:id="@+id/txvCourseTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="7, 8, 9"
-                android:textColor="#332"
-                android:textSize="16sp" />
-        </LinearLayout>
+            android:ems="10"
+            android:hint="Nhập lý do nghỉ"
+            android:inputType="text"
+            android:textColor="#333"
+            android:textSize="16sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:paddingVertical="4dp">
 
-            <TextView
-                android:layout_width="wrap_content"
+
+            <Button
+                android:id="@+id/btnViewHistory3"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Giảng viên: "
-                android:textColor="#333"
-                android:textSize="16sp" />
+                android:layout_marginTop="16dp"
+                android:backgroundTint="#4CAF50"
+                android:text="Lưu"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/txvInstructor"
-                android:layout_width="wrap_content"
+            <Button
+                android:id="@+id/btnViewHistory2"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Nguyễn Thái Cường"
-                android:textColor="#332"
-                android:textSize="16sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingVertical="4dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Tình trạng: "
-                android:textColor="#333"
-                android:textSize="16sp" />
-
-            <TextView
-                android:id="@+id/txvStatus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Báo nghỉ"
-                android:textColor="#332"
-                android:textSize="16sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingVertical="4dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Lý do: "
-                android:textColor="#333"
-                android:textSize="16sp" />
-
-            <TextView
-                android:id="@+id/txvReason"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Ốm"
-                android:textColor="#332"
-                android:textSize="16sp" />
+                android:layout_marginTop="16dp"
+                android:backgroundTint="#4CAF50"
+                android:text="Hủy"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:textStyle="bold" />
         </LinearLayout>
 
     </LinearLayout>
