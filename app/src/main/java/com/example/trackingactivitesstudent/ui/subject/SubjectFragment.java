@@ -1,9 +1,12 @@
 package com.example.trackingactivitesstudent.ui.subject;
 
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,8 +32,7 @@ public class SubjectFragment extends Fragment {
         // Xử lý sự kiện Button
         Button btnCacHPTC = binding.btnCacHPTC;
         btnCacHPTC.setOnClickListener(v -> {
-            // Xử lý khi nhấn nút "Các học phần thể chất"
-            // Bạn có thể thêm hành động chuyển sang một Fragment hoặc Activity khác
+            Navigation.findNavController(v).navigate(R.id.navigation_subject_to_physical_listFragment);
         });
 
         Button btnKQTheChat = binding.btnKQTheChat;

@@ -27,7 +27,11 @@
         android:id="@+id/navigation_subject"
         android:name="com.example.trackingactivitesstudent.ui.subject.SubjectFragment"
         android:label="@string/title_Subject"
-        tools:layout="@layout/fragment_subject" />
+        tools:layout="@layout/fragment_subject">
+        <action
+            android:id="@+id/navigation_subject_to_physical_listFragment"
+            app:destination="@+id/physical_listFragment"/>
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_userinfo"
@@ -41,4 +45,9 @@
         android:label="@string/title_Calendar"
         tools:layout="@layout/fragment_calendar" />
 
+    <fragment
+        android:id="@+id/physical_listFragment"
+        android:name="com.example.trackingactivitesstudent.ui.Physical_list.Physical_listFragment"
+        android:label="Danh sách học phần thể chất"
+        tools:layout="@layout/fragment_physical_list" />
 </navigation>
