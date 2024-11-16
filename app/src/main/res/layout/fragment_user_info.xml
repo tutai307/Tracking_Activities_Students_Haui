@@ -44,6 +44,7 @@
 
             <!-- Name and ID -->
             <TextView
+                android:id="@+id/text_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"
@@ -53,6 +54,7 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/text_student_code"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
@@ -62,6 +64,7 @@
 
             <!-- Class and Department -->
             <TextView
+                android:id="@+id/text_class"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -69,6 +72,7 @@
                 android:textSize="14sp" />
 
             <TextView
+                android:id="@+id/text_department"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"

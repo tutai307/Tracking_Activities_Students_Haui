@@ -1,6 +1,7 @@
 package com.example.trackingactivitesstudent.Database;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -62,5 +63,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Thực hiện cập nhật nếu cần
+    }
+
+    public Cursor getStudentByCode(int studentCode) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT * FROM students WHERE student_code = ?";
+        return db.rawQuery(query, new String[]{String.valueOf(studentCode)});
     }
 }

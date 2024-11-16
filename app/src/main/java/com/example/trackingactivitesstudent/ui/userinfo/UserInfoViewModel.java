@@ -11,10 +11,7 @@ public class UserInfoViewModel extends ViewModel {
     private final MutableLiveData<String> phone = new MutableLiveData<>();
 
     public UserInfoViewModel() {
-        // Khởi tạo các giá trị mặc định, có thể lấy từ cơ sở dữ liệu hoặc API
-//        name = new MutableLiveData<>();
-//        email = new MutableLiveData<>();
-//        phone = new MutableLiveData<>();
+
 
         name.setValue("Nguyen Van A"); // Dữ liệu mẫu
         email.setValue("nguyenvana@example.com");
