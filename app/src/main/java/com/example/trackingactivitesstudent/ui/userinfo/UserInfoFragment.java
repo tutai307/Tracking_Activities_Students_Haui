@@ -22,6 +22,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,8 +36,10 @@ import java.util.Calendar;
 public class UserInfoFragment extends Fragment {
     SQLiteDatabase database;
     private UserInfoViewModel mViewModel;
-    private TextView nameTextView, studentCodeTextView, departmentTextView;
+    private TextView nameTextView, studentCodeTextView, text_dob, text_gender, text_height, text_weight;
     private Button editButton;
+    UserInfoViewModel userInfo = new UserInfoViewModel();
+    String studentCode = "2022000001";
 
     public static UserInfoFragment newInstance() {
         return new UserInfoFragment();
@@ -48,12 +52,15 @@ public class UserInfoFragment extends Fragment {
 
         // Tìm nút "Sửa" và thiết lập sự kiện nhấn
         editButton = root.findViewById(R.id.button_edit);
-        editButton.setOnClickListener(v -> showBottomSheetDialog());
+        editButton.setOnClickListener(v -> showBottomSheetDialog(userInfo));
 
         // Liên kết các thành phần UI
         nameTextView = root.findViewById(R.id.text_name);
         studentCodeTextView = root.findViewById(R.id.text_student_code);
-        departmentTextView = root.findViewById(R.id.text_department);
+        text_dob = root.findViewById(R.id.text_dob);
+        text_gender = root.findViewById(R.id.text_gender);
+        text_height = root.findViewById(R.id.text_height);
+        text_weight = root.findViewById(R.id.text_weight);
 
 
         TextView viewMore = root.findViewById(R.id.viewMoreText);
@@ -68,7 +75,7 @@ public class UserInfoFragment extends Fragment {
         if (database != null) {
             // Tiến hành truy vấn
             // Lấy dữ liệu sinh viên và hiển thị
-            fetchStudentDataByCode("2022000001");
+            fetchStudentDataByCode(studentCode);
         } else {
             Toast.makeText(getContext(), "Không thể kết nối đến cơ sở dữ liệu.", Toast.LENGTH_SHORT).show();
         }
@@ -135,6 +142,34 @@ public class UserInfoFragment extends Fragment {
         database.close();
     }
 
+    private void updateStudentInfo(String studentCode, String fullname, String dob, double height, double weight,
+                                   String underlyingDisease, int gender) {
+        // Mở cơ sở dữ liệu
+        SQLiteDatabase db = openDatabase();
+
+        // Tạo đối tượng ContentValues chứa các thông tin cần cập nhật
+        ContentValues values = new ContentValues();
+        values.put("fullname", fullname);
+        values.put("dob", dob);
+        values.put("height", height);
+        values.put("weight", weight);
+        values.put("underlying_disease", underlyingDisease);
+        values.put("gender", gender);
+        values.put("updated_at", System.currentTimeMillis()); // Cập nhật thời gian sửa
+
+        // Cập nhật thông tin trong bảng "students"
+        int rowsAffected = db.update("students", values, "student_code = ?", new String[]{studentCode});
+
+        // Kiểm tra kết quả cập nhật
+        if (rowsAffected > 0) {
+            Toast.makeText(getContext(), "Cập nhật thông tin thành công!", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(getContext(), "Không thể cập nhật thông tin!", Toast.LENGTH_SHORT).show();
+        }
+
+        // Đóng cơ sở dữ liệu sau khi sử dụng
+        db.close();
+    }
 
 
     private void fetchStudentDataByCode(String studentCode) {
@@ -151,26 +186,50 @@ public class UserInfoFragment extends Fragment {
 
         // Kiểm tra xem có sinh viên nào thỏa mãn điều kiện hay không
         if (cursor != null && cursor.moveToFirst()) {
-            // Lấy chỉ số cột từ Cursor
-            int studentCodeIndex = cursor.getColumnIndex("student_code");
-            int fullNameIndex = cursor.getColumnIndex("fullname");
-            int genderIndex = cursor.getColumnIndex("gender");
-            int dobIndex = cursor.getColumnIndex("dob");
-            int heightIndex = cursor.getColumnIndex("height");
-            int weightIndex = cursor.getColumnIndex("weight");
-
-            // Lấy dữ liệu từ cursor
-            if (studentCodeIndex != -1 && fullNameIndex != -1 && genderIndex != -1 && dobIndex != -1) {
-                nameTextView.setText(cursor.getString(fullNameIndex));
-                studentCodeTextView.setText(cursor.getString(studentCodeIndex));
-                Toast.makeText(getContext(), "Tìm thấy và có chạy!", Toast.LENGTH_SHORT).show();
+//            // Lấy chỉ số cột từ Cursor
+//            int studentCodeIndex = cursor.getColumnIndex("student_code");
+//            int fullNameIndex = cursor.getColumnIndex("fullname");
+//            int genderIndex = cursor.getColumnIndex("gender");
+//            int dobIndex = cursor.getColumnIndex("dob");
+//            int heightIndex = cursor.getColumnIndex("height");
+//            int weightIndex = cursor.getColumnIndex("weight");
 //
-//                // Đặt dữ liệu vào TextView để hiển thị
-//                studentDataTextView.setText(data.toString());
-            } else {
-//                studentDataTextView.setText("Dữ liệu không hợp lệ.");
-                Toast.makeText(getContext(), "Có lỗi xảy ra", Toast.LENGTH_SHORT).show();
+//            // Lấy dữ liệu từ cursor
+//            if (studentCodeIndex != -1 && fullNameIndex != -1 && genderIndex != -1 && dobIndex != -1) {
+//                nameTextView.setText(cursor.getString(fullNameIndex));
+//                studentCodeTextView.setText(cursor.getString(studentCodeIndex));
+//                Toast.makeText(getContext(), "Tìm thấy và có chạy!", Toast.LENGTH_SHORT).show();
+////
+////                // Đặt dữ liệu vào TextView để hiển thị
+////                studentDataTextView.setText(data.toString());
+//            } else {
+////                studentDataTextView.setText("Dữ liệu không hợp lệ.");
+//                Toast.makeText(getContext(), "Có lỗi xảy ra", Toast.LENGTH_SHORT).show();
+//            }
+
+            userInfo = new UserInfoViewModel(
+                    cursor.getInt(cursor.getColumnIndexOrThrow("student_code")),
+                    cursor.getString(cursor.getColumnIndexOrThrow("password")),
+                    cursor.getString(cursor.getColumnIndexOrThrow("fullname")),
+                    cursor.getString(cursor.getColumnIndexOrThrow("avatar")),
+                    cursor.getDouble(cursor.getColumnIndexOrThrow("height")),
+                    cursor.getDouble(cursor.getColumnIndexOrThrow("weight")),
+                    cursor.getString(cursor.getColumnIndexOrThrow("underlying_disease")),
+                    cursor.getInt(cursor.getColumnIndexOrThrow("gender")),
+                    cursor.getString(cursor.getColumnIndexOrThrow("dob"))
+            );
+            String gender = "Khác";
+            if(userInfo.getGender() == 0){
+                gender = "Nam";
+            }else if(userInfo.getGender() == 1){
+                gender = "Nữ";
             }
+            nameTextView.setText(userInfo.getFullname() + "");
+            studentCodeTextView.setText(userInfo.getStudentCode() + "");
+            text_dob.setText(userInfo.getDob() + "");
+            text_gender.setText(gender + "");
+            text_height.setText(userInfo.getHeight() + "");
+            text_weight.setText(userInfo.getWeight() + "");
         } else {
             // Nếu không tìm thấy sinh viên, hiển thị thông báo
 //            studentDataTextView.setText("Không tìm thấy sinh viên với mã này.");
@@ -194,23 +253,102 @@ public class UserInfoFragment extends Fragment {
 //        departmentTextView.setText("Khoa: Khoa Công nghệ thông tin");
     }
 
-    private void showBottomSheetDialog() {
-        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(requireContext());
-        View bottomSheetView = getLayoutInflater().inflate(R.layout.bottom_sheet_layout, null);
-        bottomSheetDialog.setContentView(bottomSheetView);
+//    private void showBottomSheetDialog() {
+//        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(requireContext());
+//        View bottomSheetView = getLayoutInflater().inflate(R.layout.bottom_sheet_layout, null);
+//        bottomSheetDialog.setContentView(bottomSheetView);
+//
+//        // Tìm ImageView của nút đóng và thiết lập sự kiện OnClick
+//        Button closeButton = bottomSheetView.findViewById(R.id.closeButton);
+//        closeButton.setOnClickListener(v -> bottomSheetDialog.dismiss());
+//        Button btnDong = bottomSheetView.findViewById(R.id.btnDong);
+//        btnDong.setOnClickListener(v -> bottomSheetDialog.dismiss());
+//
+//        // Khởi tạo EditText cho ngày sinh
+//        EditText birthDateEditText = bottomSheetView.findViewById(R.id.birthDateEditText);
+//        birthDateEditText.setOnClickListener(v -> showDatePicker(birthDateEditText));
+//
+//        bottomSheetDialog.show();
+//    }
+private void showBottomSheetDialog(UserInfoViewModel userInfo) {
+    // Tạo Bottom Sheet Dialog
+    BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(requireContext());
+    View bottomSheetView = getLayoutInflater().inflate(R.layout.bottom_sheet_layout, null);
+    bottomSheetDialog.setContentView(bottomSheetView);
 
-        // Tìm ImageView của nút đóng và thiết lập sự kiện OnClick
-        Button closeButton = bottomSheetView.findViewById(R.id.closeButton);
-        closeButton.setOnClickListener(v -> bottomSheetDialog.dismiss());
-        Button btnDong = bottomSheetView.findViewById(R.id.btnDong);
-        btnDong.setOnClickListener(v -> bottomSheetDialog.dismiss());
+    // Gán dữ liệu vào các View trong Bottom Sheet
+    EditText studentCodeEditText = bottomSheetView.findViewById(R.id.studentCodeEditText);
+    EditText fullnameEditText = bottomSheetView.findViewById(R.id.fullnameEditText);
+    EditText birthDateEditText = bottomSheetView.findViewById(R.id.birthDateEditText);
+    EditText heightEditText = bottomSheetView.findViewById(R.id.heightEditText);
+    EditText weightEditText = bottomSheetView.findViewById(R.id.weightEditText);
+    EditText underlyingDiseaseEditText = bottomSheetView.findViewById(R.id.underlyingDiseaseEditText);
+    RadioGroup genderRadioGroup = bottomSheetView.findViewById(R.id.genderRadioGroup);
 
-        // Khởi tạo EditText cho ngày sinh
-        EditText birthDateEditText = bottomSheetView.findViewById(R.id.birthDateEditText);
-        birthDateEditText.setOnClickListener(v -> showDatePicker(birthDateEditText));
+    // Gán dữ liệu từ UserInfoViewModel
+    studentCodeEditText.setText(String.valueOf(userInfo.getStudentCode()));
+    fullnameEditText.setText(userInfo.getFullname());
+    birthDateEditText.setText(userInfo.getDob());
+    heightEditText.setText(String.valueOf(userInfo.getHeight()));
+    weightEditText.setText(String.valueOf(userInfo.getWeight()));
+    underlyingDiseaseEditText.setText(userInfo.getUnderlyingDisease());
 
-        bottomSheetDialog.show();
+    // Đặt radio button cho giới tính
+    if (userInfo.getGender() == 0) {
+        ((RadioButton) genderRadioGroup.findViewById(R.id.radioButton)).setChecked(true);
+    } else {
+        ((RadioButton) genderRadioGroup.findViewById(R.id.radioButton1)).setChecked(true);
     }
+
+    // Sự kiện nút đóng
+    Button closeButton = bottomSheetView.findViewById(R.id.closeButton);
+    closeButton.setOnClickListener(v -> bottomSheetDialog.dismiss());
+
+    // Sự kiện nút đóng ở dưới cùng
+    Button btnDong = bottomSheetView.findViewById(R.id.btnDong);
+    btnDong.setOnClickListener(v -> bottomSheetDialog.dismiss());
+
+    // Hiển thị DatePicker khi nhấn vào EditText ngày sinh
+    birthDateEditText.setOnClickListener(v -> showDatePicker(birthDateEditText));
+
+    Button btnEdit = bottomSheetView.findViewById(R.id.btnEdit);
+    btnEdit.setOnClickListener(v -> {
+        // Lấy dữ liệu từ các EditText
+        String studentCode = studentCodeEditText.getText().toString().trim();
+        String fullname = fullnameEditText.getText().toString().trim();
+        String dob = birthDateEditText.getText().toString().trim();
+        double height = Double.parseDouble(heightEditText.getText().toString().trim());
+        double weight = Double.parseDouble(weightEditText.getText().toString().trim());
+        String underlyingDisease = underlyingDiseaseEditText.getText().toString().trim();
+
+        // Lấy giá trị giới tính từ radio group
+        int gender = genderRadioGroup.getCheckedRadioButtonId() == R.id.radioButton ? 0 : 1;
+
+        // Kiểm tra dữ liệu hợp lệ
+        if (fullname.isEmpty() || dob.isEmpty()) {
+            Toast.makeText(getContext(), "Họ tên và ngày sinh không được để trống!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Cập nhật dữ liệu vào cơ sở dữ liệu
+        updateStudentInfo(studentCode, fullname, dob, height, weight, underlyingDisease, gender);
+
+        // Cập nhật giao diện người dùng
+//        nameTextView.setText(fullname);
+//        text_dob.setText(dob);
+//        text_gender.setText(gender == 0 ? "Nam" : "Nữ");
+//        text_height.setText(String.valueOf(height));
+//        text_weight.setText(String.valueOf(weight));
+        fetchStudentDataByCode(studentCode);
+
+        // Đóng BottomSheetDialog
+        bottomSheetDialog.dismiss();
+    });
+
+    // Hiển thị Bottom Sheet
+    bottomSheetDialog.show();
+}
+
 
     private void showDatePicker(EditText editText) {
         // Lấy ngày hiện tại
@@ -230,3 +368,4 @@ public class UserInfoFragment extends Fragment {
         datePickerDialog.show(); // Hiển thị DatePicker
     }
 }
+

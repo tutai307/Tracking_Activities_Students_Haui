@@ -65,9 +65,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // Thực hiện cập nhật nếu cần
     }
 
-    public Cursor getStudentByCode(int studentCode) {
-        SQLiteDatabase db = this.getReadableDatabase();
-        String query = "SELECT * FROM students WHERE student_code = ?";
-        return db.rawQuery(query, new String[]{String.valueOf(studentCode)});
-    }
+//    public Cursor getStudentByCode(int studentCode) {
+//        SQLiteDatabase db = this.getReadableDatabase();
+//        String query = "SELECT * FROM students WHERE student_code = ?";
+//        return db.rawQuery(query, new String[]{String.valueOf(studentCode)});
+//    }
 }
