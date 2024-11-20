@@ -25,7 +25,7 @@
         <!-- Profile Card -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="230dp"
+            android:layout_height="179dp"
             android:layout_marginBottom="16dp"
             android:background="@drawable/backgrounduser"
             android:gravity="center_horizontal"
@@ -44,15 +44,17 @@
 
             <!-- Name and ID -->
             <TextView
+                android:id="@+id/text_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"
                 android:gravity="center"
-                android:text="Nguyễn Khắc Cảnh"
+                android:text="Nguyễn Đức Chung"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/text_student_code"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
@@ -61,20 +63,9 @@
                 android:textSize="14sp" />
 
             <!-- Class and Department -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Lớp: 2021DHCNTT04"
-                android:textSize="14sp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Khoa: Khoa Công nghệ thông tin"
-                android:textSize="14sp" />
         </LinearLayout>
+
 
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
@@ -207,32 +198,77 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <TextView
+                <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="4dp"
-                    android:text="Ngày sinh: 26/02/2003"
-                    android:textSize="16sp" />
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="4dp"
+                        android:text="Ngày sinh: "
+                        android:textSize="16sp" />
+                    <TextView
+                        android:id="@+id/text_dob"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="4dp"
+                        android:text="26/02/2003"
+                        android:textSize="16sp" />
+                </TableRow>
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="4dp"
+                        android:text="Giới tính: "
+                        android:textSize="16sp" />
+                    <TextView
+                        android:id="@+id/text_gender"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="4dp"
+                        android:text="Nam"
+                        android:textSize="16sp" />
+                </TableRow>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="4dp"
-                    android:text="Giới tính: Nam"
-                    android:textSize="16sp" />
 
-                <TextView
+                <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="4dp"
-                    android:text="Nơi sinh: Bắc Ninh"
-                    android:textSize="16sp" />
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="4dp"
+                        android:text="Chiều cao: "
+                        android:textSize="16sp" />
+                    <TextView
+                        android:id="@+id/text_height"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="4dp"
+                        android:text="1.60"
+                        android:textSize="16sp" />
+                </TableRow>
 
-                <TextView
+                <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Số CMND/CCCD: 027203001960"
-                    android:textSize="16sp" />
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="4dp"
+                        android:text="Cân nặng: "
+                        android:textSize="16sp" />
+                    <TextView
+                        android:id="@+id/text_weight"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="4dp"
+                        android:text="50"
+                        android:textSize="16sp" />
+                </TableRow>
             </LinearLayout>
         </LinearLayout>
 
@@ -243,3 +279,17 @@
             android:text="Sửa"></Button>
     </LinearLayout>
 </ScrollView>
+
+
+    <!--        "id"	INTEGER,-->
+    <!--        "student_code"	INTEGER,-->
+    <!--        "password"	TEXT,-->
+    <!--        "fullname"	TEXT,-->
+    <!--        "avatar"	TEXT,-->
+    <!--        "height"	REAL,-->
+    <!--        "weight"	REAL,-->
+    <!--        "underlying_disease"	TEXT,-->
+    <!--        "gender"	INTEGER,-->
+    <!--        "dob"	TEXT,-->
+    <!--        "created_at"	TEXT,-->
+    <!--        "updated_at"	TEXT,-->
