@@ -1,8 +1,10 @@
 package com.example.trackingactivitesstudent.Database;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -53,6 +55,44 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         output.close();
         input.close();
     }
+
+    public boolean insertTrackingData(int isEnoughWater, float liter,
+                                      int isDoingExercise, int exerciseSpan,
+                                      String createdAt, String updatedAt,int studentId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+
+        // Thêm các giá trị vào ContentValues
+        contentValues.put("is_enought_water", exerciseSpan);  // 1 cho true, 0 cho false
+        contentValues.put("liter", liter);
+        contentValues.put("is_doing_exercise", exerciseSpan);  // 1 cho true, 0 cho false
+        contentValues.put("exercise_span", exerciseSpan);
+        contentValues.put("created_at", createdAt);
+        contentValues.put("updated_at", updatedAt);
+        contentValues.put("student_id", studentId);
+
+        // Chèn dữ liệu vào bảng 'trackers'
+        long result = db.insert("trackers", null, contentValues);
+        Log.d("TrackingData", "Thời gian tập: " + exerciseSpan + " phút");
+        Log.d("TrackingData", "Đã uống đủ nước: " + (exerciseSpan == 1 ? "Có" : "Không"));
+        Log.d("TrackingData", "Tập thể dục: " + (exerciseSpan == 1 ? "Có" : "Không"));
+        Log.d("TrackingData", "Số lít nước đã uống: " + liter);
+        Log.d("TrackingData", "Ngày tạo: " + createdAt);
+        Log.d("TrackingData", "ID sinh viên: " + studentId);
+        Log.d("TrackingData", "Insert result: " + result);
+
+        if (result == -1) {
+            Log.e("DatabaseError", "Insert failed, no row inserted.");
+            db.close();
+            return false; // Trả về false nếu thất bại
+        }
+
+        db.close();
+        return true; // Trả về true nếu thành công
+    }
+
+
+
 
     @Override
     public void onCreate(SQLiteDatabase db) {
