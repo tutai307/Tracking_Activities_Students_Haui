@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/rounded_background"
+        android:padding="16dp"
+        android:elevation="2dp">
+
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Buổi chiều - 7,8,9"
+            android:textColor="#4CAF50"
+            android:textStyle="bold"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/name_course"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Phát triển ứng dụng trên thiết bị di động"
+            android:textStyle="bold"
+            android:layout_marginTop="4dp"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/name_instructor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nguyễn Thái Cường (0909846699 - CNTT)"
+            android:layout_marginTop="4dp"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+</LinearLayout>
