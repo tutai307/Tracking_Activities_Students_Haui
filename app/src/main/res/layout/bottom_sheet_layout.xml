@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
     android:background="@drawable/rounded_background"
-    android:padding="16dp">
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:paddingBottom="20dp">
 
     <!-- Title and Close Button Row -->
     <RelativeLayout
@@ -25,40 +25,18 @@
             android:id="@+id/closeButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="X"
             android:layout_alignParentEnd="true"
             android:background="?android:attr/selectableItemBackground"
+            android:text="X"
             android:textColor="@android:color/black" />
     </RelativeLayout>
 
     <!-- Subtitle and Update Button -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:paddingBottom="16dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="THẺ CĂN CƯỚC CÔNG DÂN"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:layout_weight="1"/>
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="CẬP NHẬT"
-            android:background="?android:attr/selectableItemBackground"
-            android:textColor="@color/blue" />
-    </LinearLayout>
 
     <!-- Information Section with Label and Value Rows -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="413dp"
+        android:layout_height="wrap_content"
         android:background="@drawable/rounded_background"
         android:orientation="vertical"
         android:padding="16dp">
@@ -79,12 +57,15 @@
                 android:textColor="@android:color/darker_gray" />
 
             <EditText
+                android:id="@+id/studentCodeEditText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="YMP241978594"
                 android:layout_weight="2"
                 android:background="@drawable/rounded_input_background"
-                android:minHeight="48dp"/>
+                android:backgroundTint="#EFEFEF"
+                android:focusable="false"
+                android:minHeight="48dp"
+                android:text="YMP241978594" />
         </LinearLayout>
 
         <!-- Repeat for each information row -->
@@ -103,39 +84,17 @@
                 android:textColor="@android:color/darker_gray" />
 
             <EditText
+                android:id="@+id/fullnameEditText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Nguyễn Đức Chung"
                 android:layout_weight="2"
                 android:background="@drawable/rounded_input_background"
-                android:minHeight="48dp"/>
+                android:minHeight="48dp"
+                android:text="Nguyễn Đức Chung" />
 
         </LinearLayout>
 
         <!-- Thêm các dòng tương tự cho các trường khác -->
-        <!-- Điện thoại -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingBottom="8dp"
-            android:weightSum="3">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Điện thoại"
-                android:textColor="@android:color/darker_gray" />
-
-            <EditText
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="0913 297 548"
-                android:layout_weight="2"
-                android:background="@drawable/rounded_input_background"
-                android:minHeight="48dp"/>
-        </LinearLayout>
 
         <!-- Ngày sinh -->
         <LinearLayout
@@ -155,14 +114,14 @@
             <EditText
                 android:id="@+id/birthDateEditText"
                 android:layout_width="0dp"
-                android:layout_weight="2"
                 android:layout_height="wrap_content"
-                android:text="26/02/2003"
+                android:layout_weight="2"
                 android:background="@drawable/rounded_input_background"
                 android:drawableEnd="@drawable/ic_calendar"
                 android:focusable="false"
                 android:hint="Chọn ngày"
-                android:minHeight="48dp"/> <!-- Placeholder -->
+                android:minHeight="48dp"
+                android:text="26/02/2003" /> <!-- Placeholder -->
         </LinearLayout>
 
         <!-- Giới tính -->
@@ -182,6 +141,7 @@
                 android:textColor="@android:color/darker_gray" />
 
             <RadioGroup
+                android:id="@+id/genderRadioGroup"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
@@ -193,8 +153,9 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Nam"
-                    android:checked="true"/>
+                    android:checked="true"
+                    android:text="Nam" />
+
                 <RadioButton
                     android:id="@+id/radioButton1"
                     android:layout_width="0dp"
@@ -204,16 +165,87 @@
             </RadioGroup>
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="8dp"
+            android:weightSum="3">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Chiều cao"
+                android:textColor="@android:color/darker_gray" />
+
+            <EditText
+                android:id="@+id/heightEditText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:background="@drawable/rounded_input_background"
+                android:minHeight="48dp"
+                android:text="1m5" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="8dp"
+            android:weightSum="3">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Cân năng"
+                android:textColor="@android:color/darker_gray" />
+
+            <EditText
+                android:id="@+id/weightEditText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:background="@drawable/rounded_input_background"
+                android:minHeight="48dp"
+                android:text="50kg" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="8dp"
+            android:weightSum="3">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Bệnh nền"
+                android:textColor="@android:color/darker_gray" />
+
+            <EditText
+                android:id="@+id/underlyingDiseaseEditText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:background="@drawable/rounded_input_background"
+                android:minHeight="48dp"
+                android:text="Không" />
+        </LinearLayout>
         <!-- Các trường khác có thể lặp lại theo cách tương tự -->
     </LinearLayout>
 
     <!-- Action Buttons Row -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center"
         android:orientation="horizontal"
-        android:paddingTop="16dp"
-        android:gravity="center">
+        android:paddingTop="16dp">
 
         <Button
             android:id="@+id/btnDong"
@@ -225,11 +257,12 @@
             android:text="Đóng" />
 
         <Button
+            android:id="@+id/btnEdit"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Sửa thông tin"
             android:layout_margin="5dp"
-            android:backgroundTint="@color/blue" />
+            android:layout_weight="1"
+            android:backgroundTint="@color/blue"
+            android:text="Sửa thông tin" />
     </LinearLayout>
 </LinearLayout>
