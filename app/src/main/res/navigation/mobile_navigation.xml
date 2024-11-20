@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/navigation_leave"
-        android:name="com.example.trackingactivitesstudent.ui.leave.LeaveFragment"
+        android:name="com.example.trackingactivitesstudent.ui.onleave.LeaveFragment"
         android:label="@string/title_LeaveNotice"
         tools:layout="@layout/fragment_leave_notice" />
 
@@ -30,7 +30,7 @@
         tools:layout="@layout/fragment_subject">
         <action
             android:id="@+id/navigation_subject_to_physical_listFragment"
-            app:destination="@+id/physical_listFragment"/>
+            app:destination="@+id/physical_listFragment" />
     </fragment>
 
     <fragment
@@ -50,4 +50,14 @@
         android:name="com.example.trackingactivitesstudent.ui.Physical_list.Physical_listFragment"
         android:label="Danh sách học phần thể chất"
         tools:layout="@layout/fragment_physical_list" />
+
+    <!-- Fragment Leave Notice -->
+    <fragment
+        android:id="@+id/leaveFragment"
+        android:name="com.example.trackingactivitesstudent.ui.onleave.LeaveFragment"
+        android:label="fragment_leave_notice"
+        tools:layout="@layout/fragment_leave_notice">
+
+    </fragment>
+
 </navigation>

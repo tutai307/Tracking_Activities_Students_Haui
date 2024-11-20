@@ -7,7 +7,7 @@
     android:padding="16dp"
     android:background="#F5F5F5"
     android:orientation="vertical"
-    tools:context=".ui.leave.LeaveFragment">
+    tools:context=".ui.onleave.LeaveFragment">
 
     <TextView
         android:layout_width="match_parent"
@@ -53,6 +53,44 @@
             android:padding="8dp"
             android:src="@drawable/baseline_calendar_today_24"
             app:tint="#4CAF50" />
+    </LinearLayout>
+
+    <Spinner
+        android:id="@+id/spnClass"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/edtReason"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Nhập lý do nghỉ"
+        android:inputType="text"
+        android:textColor="#333"
+        android:textSize="16sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingVertical="4dp">
+
+
+        <Button
+            android:id="@+id/btnSave"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="#4CAF50"
+            android:text="Lưu"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
     </LinearLayout>
 
     <ListView
