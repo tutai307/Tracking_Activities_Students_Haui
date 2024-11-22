@@ -37,8 +37,7 @@ public class SubjectFragment extends Fragment {
 
         Button btnKQTheChat = binding.btnKQTheChat;
         btnKQTheChat.setOnClickListener(v -> {
-            // Xử lý khi nhấn nút "Kết quả thể chất"
-            // Bạn có thể thêm hành động chuyển sang một Fragment hoặc Activity khác
+            Navigation.findNavController(v).navigate(R.id.navigation_subject_to_physical_resultsFragment);
         });
 
         return root;
