@@ -1,6 +1,7 @@
 package com.example.trackingactivitesstudent;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -64,6 +65,12 @@ public class LoginActivity extends AppCompatActivity {
                 // Kiểm tra thông tin đăng nhập
                 if (checkLogin(studentCode, password)) {
                     txtError.setVisibility(View.GONE);
+                    SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putInt("studentId", studentCode);
+                    editor.apply();
+
+                    // Chuyển sang MainActivity
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
                     finish();
@@ -95,11 +102,11 @@ public class LoginActivity extends AppCompatActivity {
 
     // Thêm dữ liệu mẫu
     private void insertSampleData() {
-        String insertDataQuery = "INSERT OR IGNORE INTO students (student_code, password, fullname, created_at, updated_at) " +
-                "VALUES " +
-                "(20230001, 'password123', 'Nguyễn Văn A', '2024-11-22', '2024-11-22'), " +
-                "(20230002, 'mypassword', 'Trần Thị B', '2024-11-22', '2024-11-22')";
-        database.execSQL(insertDataQuery);
+//        String insertDataQuery = "INSERT OR IGNORE INTO students (student_code, password, fullname, created_at, updated_at) " +
+//                "VALUES " +
+//                "(20230001, 'password123', 'Nguyễn Văn A', '2024-11-22', '2024-11-22'), " +
+//                "(20230002, 'mypassword', 'Trần Thị B', '2024-11-22', '2024-11-22')";
+//        database.execSQL(insertDataQuery);
     }
 
     // Kiểm tra thông tin đăng nhập
