@@ -364,11 +364,11 @@ public class CalendarFragment extends Fragment {
     // Hàm thêm khóa học vào bảng courses
     private void addCourses() {
         ContentValues values = new ContentValues();
-//        values.put("course_code", "CS101");
-//        values.put("course_name", "Khoa học máy tính");
-//        values.put("is_physical", 1);  // 1 = Physical class
-//        values.put("credits", 3.0);
-//        database.insert("courses", null, values);
+        values.put("course_code", "CS101");
+        values.put("course_name", "Khoa học máy tính");
+        values.put("is_physical", 1);  // 1 = Physical class
+        values.put("credits", 3.0);
+        database.insert("courses", null, values);
 
         values.put("course_code", "ENG202");
         values.put("course_name", "Phát triển ứng dụng trên thiết bị di động");
@@ -396,23 +396,23 @@ public class CalendarFragment extends Fragment {
         values.put("course_id", 3);  // Link to course ID
         values.put("instructor_id", 1);  // Link to instructor ID
         database.insert("classes", null, values);
-//        values.put("class_code", "CS101-01");
-//        values.put("days_in_week", "Monday, Wednesday");
-//        values.put("time_in_day", "10:00 AM - 12:00 PM");
-//        values.put("started_at", "2024-11-21");
-//        values.put("finished_at", "2024-12-21");
-//        values.put("course_id", 1);  // Link to course ID
-//        values.put("instructor_id", 1);  // Link to instructor ID
-//        database.insert("classes", null, values);
+        values.put("class_code", "CS101-01");
+        values.put("days_in_week", "Monday, Wednesday");
+        values.put("time_in_day", "10:00 AM - 12:00 PM");
+        values.put("started_at", "2024-11-21");
+        values.put("finished_at", "2024-12-21");
+        values.put("course_id", 1);  // Link to course ID
+        values.put("instructor_id", 1);  // Link to instructor ID
+        database.insert("classes", null, values);
 
-//        values.put("class_code", "ENG202-01");
-//        values.put("days_in_week", "Tuesday, Thursday");
-//        values.put("time_in_day", "02:00 PM - 04:00 PM");
-//        values.put("started_at", "2024-11-21");
-//        values.put("finished_at", "2024-12-21");
-//        values.put("course_id", 2);  // Link to course ID
-//        values.put("instructor_id", 2);  // Link to instructor ID
-//        database.insert("classes", null, values);
+        values.put("class_code", "ENG202-01");
+        values.put("days_in_week", "Tuesday, Thursday");
+        values.put("time_in_day", "02:00 PM - 04:00 PM");
+        values.put("started_at", "2024-11-21");
+        values.put("finished_at", "2024-12-21");
+        values.put("course_id", 2);  // Link to course ID
+        values.put("instructor_id", 2);  // Link to instructor ID
+        database.insert("classes", null, values);
 
         Toast.makeText(getContext(), "Thêm lớp học thành công", Toast.LENGTH_SHORT).show();
     }

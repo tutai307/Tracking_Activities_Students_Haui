@@ -92,7 +92,34 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return true; // Trả về true nếu thành công
     }
 
+    public boolean isTrackingDataExist(String date, int studentId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT COUNT(*) FROM trackers WHERE created_at = ? AND student_id = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{date, String.valueOf(studentId)});
+        boolean exists = false;
+        if (cursor.moveToFirst()) {
+            exists = cursor.getInt(0) > 0;
+        }
+        cursor.close();
+        return exists;
+    }
+    public boolean updateTrackingData(int drankWater, float liter, int didExercise, int timeExercise, String updatedAt, int studentId, String createdAt) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("is_enought_water", drankWater);
+        values.put("liter", liter);
+        values.put("is_doing_exercise", didExercise);
+        values.put("exercise_span", timeExercise);
+        values.put("updated_at", updatedAt);
 
+        int rowsAffected = db.update("trackers", values, "created_at = ? AND student_id = ?", new String[]{createdAt, String.valueOf(studentId)});
+        return rowsAffected > 0;
+    }
+
+    public Cursor getStudentInfo(int studentCode) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery("SELECT height, weight FROM students WHERE student_code = ?", new String[]{String.valueOf(studentCode)});
+    }
 
 
     @Override

@@ -56,10 +56,53 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:text="Chiều cao:"
+                    android:textColor="#333"
+                    android:textSize="16sp" />
+                <TextView
+                    android:id="@+id/txtHeight"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:hint="Chiều cao"
+                    android:textColor="#666"
+                    android:textSize="16sp" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingVertical="8dp">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Cân nặng:"
+                    android:textColor="#333"
+                    android:textSize="16sp" />
+                <TextView
+                    android:id="@+id/txtWeight"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:hint="Cân nặng"
+                    android:textColor="#666"
+                    android:textSize="16sp" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingVertical="8dp">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="BMI:"
                     android:textColor="#333"
                     android:textSize="16sp" />
                 <TextView
+                    android:id="@+id/txtBMI"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
@@ -81,6 +124,7 @@
                     android:textColor="#333"
                     android:textSize="16sp" />
                 <TextView
+                    android:id="@+id/txtStatus"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
@@ -124,15 +168,7 @@
                     android:id="@+id/chkDrinkWater"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Uống đủ nước" />
-                <TextView
-                    android:id="@+id/txtQuantityWater"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="(2 lít)"
-                    android:textColor="#666"
-                    android:paddingStart="8dp"
-                    android:textSize="14sp" />
+                    android:text="Uống nước" />
             </LinearLayout>
 
             <LinearLayout
@@ -145,14 +181,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Tập thể dục" />
-                <TextView
-                    android:id="@+id/txtDoExercise"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="(Khuyến khích 15p)"
-                    android:textColor="#666"
-                    android:paddingStart="8dp"
-                    android:textSize="14sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -179,12 +207,46 @@
                     android:minHeight="48dp"
                     android:textAlignment="center"
                     android:layout_marginRight="10sp"
-                    android:text="30"
+                    android:hint="30"
                     android:textColor="#333" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="phút"
+                    android:textColor="#333"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingVertical="8dp">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.5"
+                    android:text="Số lít lước"
+                    android:textColor="#333"
+                    android:textSize="16sp" />
+                <EditText
+                    android:id="@+id/edtLiter"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.4"
+                    android:background="@drawable/rounded_edit_text"
+                    android:ems="3"
+                    android:inputType="number"
+                    android:minWidth="48dp"
+                    android:minHeight="48dp"
+                    android:textAlignment="center"
+                    android:layout_marginRight="10sp"
+                    android:hint="2"
+                    android:textColor="#333" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="lít (l)"
                     android:textColor="#333"
                     android:textSize="16sp" />
             </LinearLayout>
@@ -242,7 +304,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:padding="8dp"
-                        android:text=""
+                        android:text="dd/mm/yyyy"
                         android:textColor="#999999"
                         android:textSize="16sp" />
 
@@ -275,7 +337,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:padding="8dp"
-                        android:text=""
+                        android:text="dd/mm/yyyy"
                         android:textColor="#999999"
                         android:textSize="16sp" />
 
