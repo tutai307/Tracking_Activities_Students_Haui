@@ -118,7 +118,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public Cursor getStudentInfo(int studentCode) {
         SQLiteDatabase db = this.getReadableDatabase();
-        return db.rawQuery("SELECT height, weight FROM students WHERE student_code = ?", new String[]{String.valueOf(studentCode)});
+        return db.rawQuery("SELECT height, weight FROM students WHERE id = ?", new String[]{String.valueOf(studentCode)});
     }
 
 
@@ -132,9 +132,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // Thực hiện cập nhật nếu cần
     }
 
-//    public Cursor getStudentByCode(int studentCode) {
-//        SQLiteDatabase db = this.getReadableDatabase();
-//        String query = "SELECT * FROM students WHERE student_code = ?";
-//        return db.rawQuery(query, new String[]{String.valueOf(studentCode)});
-//    }
+    public int getStudentId(int studentCode, String password) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(
+                "SELECT id FROM students WHERE student_code = ? AND password = ?",
+                new String[]{String.valueOf(studentCode), password});
+
+        if (cursor != null && cursor.moveToFirst()) {
+            int id = cursor.getInt(cursor.getColumnIndex("id"));
+            cursor.close();
+            return id;
+        }
+
+        return -1;
+    }
+
 }
