@@ -1,5 +1,8 @@
 package com.example.trackingactivitesstudent;
 
+import static androidx.core.content.ContentProviderCompat.requireContext;
+import static java.security.AccessController.getContext;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -13,6 +16,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.trackingactivitesstudent.Database.DatabaseHelper;
+
 public class LoginActivity extends AppCompatActivity {
 
     private EditText edtStudentCode, edtPassword;
@@ -24,6 +29,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
 
         // Ánh xạ view
         edtStudentCode = findViewById(R.id.edtStudentCode);
@@ -62,12 +68,16 @@ public class LoginActivity extends AppCompatActivity {
                     return;
                 }
 
-                // Kiểm tra thông tin đăng nhập
-                if (checkLogin(studentCode, password)) {
+                // Lấy studentId từ hàm getStudentId
+                int studentId = getStudentId(studentCode, password);
+
+                if (studentId != -1) { // Nếu id tồn tại (đăng nhập thành công)
                     txtError.setVisibility(View.GONE);
+
+                    // Lưu id vào SharedPreferences
                     SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putInt("studentId", studentCode);
+                    editor.putInt("studentId", studentId);
                     editor.apply();
 
                     // Chuyển sang MainActivity
@@ -80,6 +90,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+
     }
 
     // Tạo bảng nếu chưa tồn tại
@@ -110,14 +121,18 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     // Kiểm tra thông tin đăng nhập
-    private boolean checkLogin(int studentCode, String password) {
-        String query = "SELECT * FROM students WHERE student_code = ? AND password = ?";
+    private int getStudentId(int studentCode, String password) {
+        String query = "SELECT id FROM students WHERE student_code = ? AND password = ?";
         Cursor cursor = database.rawQuery(query, new String[]{String.valueOf(studentCode), password});
 
-        boolean isValid = cursor.getCount() > 0;
+        int studentId = -1; // -1 nghĩa là không tìm thấy
+        if (cursor.moveToFirst()) {
+            studentId = cursor.getInt(cursor.getColumnIndex("id"));
+        }
         cursor.close();
-        return isValid;
+        return studentId;
     }
+
 
     @Override
     protected void onDestroy() {
