@@ -123,7 +123,6 @@ public class ExerciseFragment extends Fragment {
             }
         });
 
-
         btnSaveTracking.setOnClickListener(view -> {
             try {
                 if (edtTimeExercise.isEnabled()) {
@@ -181,6 +180,31 @@ public class ExerciseFragment extends Fragment {
         });
 
         Log.d("LoginActivity", "Student ID saved: " + studentId);
+
+        btnViewHistory.setOnClickListener(view -> {
+            if (isEndDateBeforeStartDate()) {
+                // Nếu không có studentId, có thể là người dùng chưa đăng nhập, thông báo lỗi
+                Toast.makeText(getActivity(), "Chọn ngày kết thúc lớn hơn ngày bắt đầu.", Toast.LENGTH_SHORT).show();
+            } else {
+                // Chuyển tới Activity để xem lịch sử
+                String sDate = txtStartDate.getText().toString();
+                String eDate = txtEndDate.getText().toString();
+
+                TrackingFragment trackingFragment = new TrackingFragment();
+                Bundle bundle = new Bundle();
+                bundle.putInt("studentId", studentId);
+                bundle.putString("startDate", sDate);
+                bundle.putString("endDate", eDate);
+                trackingFragment.setArguments(bundle);
+
+                // Thay thế Fragment hiện tại bằng TrackingFragment
+//                requireActivity().getSupportFragmentManager()
+//                        .beginTransaction()
+//                        .replace(R.id.fragment_container, trackingFragment) // R.id.fragment_container là ID của container chứa Fragment
+//                        .addToBackStack(null) // Cho phép quay lại Fragment trước đó
+//                        .commit();
+            }
+        });
         return root;
     }
 
@@ -196,7 +220,6 @@ public class ExerciseFragment extends Fragment {
                 date.get(Calendar.MONTH),
                 date.get(Calendar.DAY_OF_MONTH)).show();
     }
-
 
     // Hàm kiểm tra ngày kết thúc có nhỏ hơn ngày bắt đầu không
     private boolean isEndDateBeforeStartDate() {
