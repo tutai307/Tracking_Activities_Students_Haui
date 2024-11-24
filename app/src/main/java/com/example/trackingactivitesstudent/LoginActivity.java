@@ -44,7 +44,7 @@ public class LoginActivity extends AppCompatActivity {
         createTableIfNotExists();
 
         // Thêm dữ liệu mẫu nếu cần
-//        insertSampleData();
+        insertSampleData();
 
         // Xử lý nút đăng nhập
         btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -113,11 +113,11 @@ public class LoginActivity extends AppCompatActivity {
 
     // Thêm dữ liệu mẫu
     private void insertSampleData() {
-//        String insertDataQuery = "INSERT OR IGNORE INTO students (student_code, password, fullname, created_at, updated_at) " +
-//                "VALUES " +
-//                "(20230001, 'password123', 'Nguyễn Văn A', '2024-11-22', '2024-11-22'), " +
-//                "(20230002, 'mypassword', 'Trần Thị B', '2024-11-22', '2024-11-22')";
-//        database.execSQL(insertDataQuery);
+        String insertDataQuery = "INSERT OR IGNORE INTO students (student_code, password, fullname, created_at, updated_at) " +
+                "VALUES " +
+                "(20230001, 'password123', 'Nguyễn Văn A', '2024-11-22', '2024-11-22'), " +
+                "(20230002, 'mypassword', 'Trần Thị B', '2024-11-22', '2024-11-22')";
+        database.execSQL(insertDataQuery);
     }
 
     // Kiểm tra thông tin đăng nhập
