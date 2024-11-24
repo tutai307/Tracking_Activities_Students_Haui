@@ -44,7 +44,7 @@ public class LoginActivity extends AppCompatActivity {
         createTableIfNotExists();
 
         // Thêm dữ liệu mẫu nếu cần
-        insertSampleData();
+//        insertSampleData();
 
         // Xử lý nút đăng nhập
         btnLogin.setOnClickListener(new View.OnClickListener() {
