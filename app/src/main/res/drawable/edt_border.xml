@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="#FFFFFF" /> <!-- Màu nền bên trong ô (có thể thay đổi hoặc bỏ đi nếu không cần) -->
+    <stroke
+        android:width="2dp"
+        android:color="#4CAF50" /> <!-- Màu và độ dày của viền -->
+    <corners android:radius="8dp" /> <!-- Bo góc viền -->
+    <padding
+        android:top="8dp"
+        android:bottom="8dp"
+        android:left="8dp"
+        android:right="8dp" /> <!-- Padding bên trong ô -->
+</shape>

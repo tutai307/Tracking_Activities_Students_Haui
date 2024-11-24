@@ -70,5 +70,4 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 //        String query = "SELECT * FROM students WHERE student_code = ?";
 //        return db.rawQuery(query, new String[]{String.valueOf(studentCode)});
 //    }
-
 }

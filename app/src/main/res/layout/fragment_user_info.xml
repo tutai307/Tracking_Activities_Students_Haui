@@ -276,7 +276,14 @@
             android:id="@+id/button_edit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Sửa"></Button>
+            android:text="Sửa"/>
+
+        <Button
+            android:id="@+id/button_logout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#E91E63"
+            android:text="Đăng xuất" />
     </LinearLayout>
 </ScrollView>
 

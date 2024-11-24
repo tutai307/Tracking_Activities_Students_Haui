@@ -31,6 +31,10 @@
         <action
             android:id="@+id/navigation_subject_to_physical_listFragment"
             app:destination="@+id/physical_listFragment"/>
+
+        <action
+            android:id="@+id/navigation_subject_to_physical_resultsFragment"
+            app:destination="@+id/physical_resultsFragment"/>
     </fragment>
 
     <fragment
@@ -50,4 +54,10 @@
         android:name="com.example.trackingactivitesstudent.ui.Physical_list.Physical_listFragment"
         android:label="Danh sách học phần thể chất"
         tools:layout="@layout/fragment_physical_list" />
+
+    <fragment
+        android:id="@+id/physical_resultsFragment"
+        android:name="com.example.trackingactivitesstudent.ui.Physical_results.Physical_resultsFragment"
+        android:label="Danh sách học phần thể chất"
+        tools:layout="@layout/fragment_physical_results" />
 </navigation>
