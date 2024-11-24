@@ -38,8 +38,57 @@
             app:layout_constraintTop_toBottomOf="@id/titleLabel"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
-
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sức khoẻ của bạn:"
+                android:textColor="#333"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:paddingBottom="8dp" />
             <!-- Rows for BMI, Status, and Progress -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingVertical="8dp">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Chiều cao:"
+                    android:textColor="#333"
+                    android:textSize="16sp" />
+                <TextView
+                    android:id="@+id/txtHeight"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:hint="Chiều cao"
+                    android:textColor="#666"
+                    android:textSize="16sp" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingVertical="8dp">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Cân nặng:"
+                    android:textColor="#333"
+                    android:textSize="16sp" />
+                <TextView
+                    android:id="@+id/txtWeight"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:hint="Cân nặng"
+                    android:textColor="#666"
+                    android:textSize="16sp" />
+            </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -53,6 +102,7 @@
                     android:textColor="#333"
                     android:textSize="16sp" />
                 <TextView
+                    android:id="@+id/txtBMI"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
@@ -74,6 +124,7 @@
                     android:textColor="#333"
                     android:textSize="16sp" />
                 <TextView
+                    android:id="@+id/txtStatus"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
@@ -82,62 +133,7 @@
                     android:textSize="16sp" />
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingVertical="8dp">
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Tiến độ:"
-                    android:textColor="#333"
-                    android:textSize="16sp" />
-                <ProgressBar
-                    android:id="@+id/pgbTienTrinh"
-                    style="?android:attr/progressBarStyleHorizontal"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:progress="50"
-                    android:progressTint="#4CAF50" />
-            </LinearLayout>
-
             <!-- Exercise Time Row -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingVertical="8dp">
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1.5"
-                    android:text="Thời gian tập"
-                    android:textColor="#333"
-                    android:textSize="16sp" />
-                <EditText
-                    android:id="@+id/edtTimeExercise"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.4"
-                    android:background="@drawable/rounded_edit_text"
-                    android:ems="3"
-                    android:inputType="number"
-                    android:minWidth="48dp"
-                    android:minHeight="48dp"
-                    android:textAlignment="center"
-                    android:layout_marginRight="10sp"
-                    android:text="30"
-                    android:textColor="#333" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="phút"
-                    android:textColor="#333"
-                    android:textSize="16sp" />
-            </LinearLayout>
         </LinearLayout>
 
         <!-- Task Checklist -->
@@ -172,15 +168,7 @@
                     android:id="@+id/chkDrinkWater"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Uống đủ nước" />
-                <TextView
-                    android:id="@+id/txtQuantityWater"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="(2 lít)"
-                    android:textColor="#666"
-                    android:paddingStart="8dp"
-                    android:textSize="14sp" />
+                    android:text="Uống nước" />
             </LinearLayout>
 
             <LinearLayout
@@ -193,15 +181,84 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Tập thể dục" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingVertical="8dp">
                 <TextView
-                    android:id="@+id/txtDoExercise"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.5"
+                    android:text="Thời gian tập"
+                    android:textColor="#333"
+                    android:textSize="16sp" />
+                <EditText
+                    android:id="@+id/edtTimeExercise"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.4"
+                    android:background="@drawable/rounded_edit_text"
+                    android:ems="3"
+                    android:inputType="number"
+                    android:minWidth="48dp"
+                    android:minHeight="48dp"
+                    android:textAlignment="center"
+                    android:layout_marginRight="10sp"
+                    android:hint="30"
+                    android:textColor="#333" />
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="(Khuyến khích 15p)"
-                    android:textColor="#666"
-                    android:paddingStart="8dp"
-                    android:textSize="14sp" />
+                    android:text="phút"
+                    android:textColor="#333"
+                    android:textSize="16sp" />
             </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingVertical="8dp">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.5"
+                    android:text="Số lít lước"
+                    android:textColor="#333"
+                    android:textSize="16sp" />
+                <EditText
+                    android:id="@+id/edtLiter"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.4"
+                    android:background="@drawable/rounded_edit_text"
+                    android:ems="3"
+                    android:inputType="number"
+                    android:minWidth="48dp"
+                    android:minHeight="48dp"
+                    android:textAlignment="center"
+                    android:layout_marginRight="10sp"
+                    android:hint="2"
+                    android:textColor="#333" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="lít (l)"
+                    android:textColor="#333"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btnSaveTracking"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:backgroundTint="#4CAF50"
+                android:text="Lưu thông tin"
+                android:textColor="#FFFFFF" />
         </LinearLayout>
 
         <!-- Date and History Section -->
@@ -221,26 +278,33 @@
                 android:layout_height="wrap_content"
                 android:stretchColumns="1"
                 android:padding="8dp">
-
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Theo dõi rèn luyện:"
+                    android:textColor="#333"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:paddingBottom="8dp" />
                 <!-- Start Date Row -->
                 <TableRow>
                     <TextView
                         android:id="@+id/txtStartDateLabel"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="0.7"
                         android:padding="8dp"
-                        android:text="Ngày bắt đầu:"
+                        android:text="Bắt đầu:"
                         android:textColor="#333333"
                         android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/txtStartDate"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:padding="8dp"
-                        android:text="30/07/2024"
+                        android:text="dd/mm/yyyy"
                         android:textColor="#999999"
                         android:textSize="16sp" />
 
@@ -260,20 +324,20 @@
                     <TextView
                         android:id="@+id/txtEndDateLabel"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="0.7"
                         android:padding="8dp"
-                        android:text="Ngày kết thúc:"
+                        android:text="Kết thúc:"
                         android:textColor="#333333"
                         android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/txtEndDate"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:padding="8dp"
-                        android:text="01/12/2024"
+                        android:text="dd/mm/yyyy"
                         android:textColor="#999999"
                         android:textSize="16sp" />
 
