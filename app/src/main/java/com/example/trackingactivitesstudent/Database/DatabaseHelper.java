@@ -33,16 +33,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private void copyDatabaseIfNeeded() {
         File dbFile = new File(DATABASE_PATH + DATABASE_NAME);
-
-        // Nếu cơ sở dữ liệu đã tồn tại, xóa nó trước khi sao chép mới
-        if (dbFile.exists()) {
-            dbFile.delete();  // Xóa cơ sở dữ liệu cũ
-        }
-
-        try {
-            copyDatabase();  // Sao chép cơ sở dữ liệu mới
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (!dbFile.exists()) {
+            try {
+                copyDatabase();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
