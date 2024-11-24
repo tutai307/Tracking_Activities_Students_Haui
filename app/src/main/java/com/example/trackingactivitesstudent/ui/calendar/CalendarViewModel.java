@@ -8,16 +8,18 @@ public class CalendarViewModel extends ViewModel {
     private String timeInDay;
     private String courseName;
     private String instructorName;
+    private String studentId;
 
     public CalendarViewModel() {
     }
 
-    public CalendarViewModel(String classCode, String daysInWeek, String timeInDay, String courseName, String instructorName) {
+    public CalendarViewModel(String classCode, String daysInWeek, String timeInDay, String courseName, String instructorName, String studentId) {
         this.classCode = classCode;
         this.daysInWeek = daysInWeek;
         this.timeInDay = timeInDay;
         this.courseName = courseName;
         this.instructorName = instructorName;
+        this.studentId = studentId;
     }
 
     public String getClassCode() {
@@ -58,5 +60,13 @@ public class CalendarViewModel extends ViewModel {
 
     public void setInstructorName(String instructorName) {
         this.instructorName = instructorName;
+    }
+
+    public String getStudentId() {
+        return studentId;
+    }
+
+    public void setStudentId(String studentId) {
+        this.studentId = studentId;
     }
 }

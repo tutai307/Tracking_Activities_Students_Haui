@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -37,7 +38,7 @@ public class CalendarFragment extends Fragment {
     // Lấy ngày hôm nay
     Calendar calendar = Calendar.getInstance();
     int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
-    private String selectedDay = "";
+    private String selectedDay = "", student_Id = "";
 
     public static CalendarFragment newInstance() {
         return new CalendarFragment();
@@ -83,6 +84,13 @@ public class CalendarFragment extends Fragment {
         t6Layout.setOnClickListener(v -> selectDay(t6Layout, allLayouts));
         t7Layout.setOnClickListener(v -> selectDay(t7Layout, allLayouts));
         cnLayout.setOnClickListener(v -> selectDay(cnLayout, allLayouts));
+
+        SharedPreferences sharedPreferences = requireContext().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
+        int studentId = sharedPreferences.getInt("studentId", -1);
+        if(studentId != -1){
+            student_Id = studentId + "";
+            Toast.makeText(getContext(), student_Id + " :Studentid", Toast.LENGTH_SHORT).show();
+        }
 
         selectToday(allLayouts, dayOfWeek);
 
@@ -186,7 +194,7 @@ public class CalendarFragment extends Fragment {
         SQLiteDatabase database = openDatabase();
 
         // Truy vấn các lớp học
-        Cursor cursor = database.query("classes", new String[]{"id", "class_code", "days_in_week", "time_in_day", "course_id", "instructor_id"},
+        Cursor cursor = database.query("classes", new String[]{"id", "class_code", "days_in_week", "time_in_day", "course_id", "instructor_id", "created_at"},
                 null, null, null, null, null);
 
         if (cursor != null && cursor.moveToFirst()) {
@@ -198,6 +206,7 @@ public class CalendarFragment extends Fragment {
                 int timeInDayIndex = cursor.getColumnIndex("time_in_day");
                 int courseIdIndex = cursor.getColumnIndex("course_id");
                 int instructorIdIndex = cursor.getColumnIndex("instructor_id");
+                int studentIdIndex = cursor.getColumnIndex("created_at");
 
                 // Kiểm tra các chỉ số cột hợp lệ
                 if (classIdIndex >= 0 && classCodeIndex >= 0 && daysInWeekIndex >= 0 && timeInDayIndex >= 0 && courseIdIndex >= 0 && instructorIdIndex >= 0) {
@@ -207,6 +216,7 @@ public class CalendarFragment extends Fragment {
                     String timeInDay = cursor.getString(timeInDayIndex);
                     int courseId = cursor.getInt(courseIdIndex);
                     int instructorId = cursor.getInt(instructorIdIndex);
+                    String studentId = cursor.getString(studentIdIndex);
 
                     // Kiểm tra xem lớp học có chứa ngày được chọn không
                     if (daysInWeek.contains(selectedDay)) {
@@ -241,7 +251,7 @@ public class CalendarFragment extends Fragment {
                         }
 
                         // Tạo đối tượng CalendarViewModel và thêm vào danh sách
-                        CalendarViewModel calendarViewModel = new CalendarViewModel(classCode, daysInWeek, timeInDay, courseName, instructorName);
+                        CalendarViewModel calendarViewModel = new CalendarViewModel(classCode, daysInWeek, timeInDay, courseName, instructorName, studentId + "");
                         classList.add(calendarViewModel);
                     }
                 }
@@ -250,6 +260,7 @@ public class CalendarFragment extends Fragment {
         if (cursor != null) {
             cursor.close();
         }
+
 
         // Cập nhật adapter với danh sách lớp học đã lấy được
         arrClass.clear();
@@ -304,6 +315,23 @@ public class CalendarFragment extends Fragment {
 
         // Gọi lại hàm loadClassesFromDatabase để lọc các lớp học theo ngày
         loadClassesFromDatabase();
+        if (!student_Id.isEmpty()) {
+            // Tạo một danh sách tạm để lưu các phần tử cần xóa
+            ArrayList<CalendarViewModel> toRemove = new ArrayList<>();
+
+            for (CalendarViewModel c : arrClass) {
+                if (!c.getStudentId().equals(student_Id)) {
+                    toRemove.add(c);
+                    Toast.makeText(getContext(), "Xóa " + c.getClassCode(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            // Xóa các phần tử trong danh sách tạm
+            arrClass.removeAll(toRemove);
+        }
+
+// Cập nhật lại adapter
+        adapter.notifyDataSetChanged();
     }
 
 

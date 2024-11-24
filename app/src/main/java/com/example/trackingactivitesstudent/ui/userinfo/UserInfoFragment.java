@@ -1,5 +1,6 @@
 package com.example.trackingactivitesstudent.ui.userinfo;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModel;
@@ -7,6 +8,8 @@ import androidx.lifecycle.ViewModel;
 import android.app.DatePickerDialog;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -27,6 +30,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.trackingactivitesstudent.LoginActivity;
 import com.example.trackingactivitesstudent.R;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
@@ -37,10 +41,9 @@ public class UserInfoFragment extends Fragment {
     SQLiteDatabase database;
     private UserInfoViewModel mViewModel;
     private TextView nameTextView, studentCodeTextView, text_dob, text_gender, text_height, text_weight;
-    private Button editButton;
+    private Button editButton, logoutButton;
     UserInfoViewModel userInfo = new UserInfoViewModel();
-    String studentCode = "2022000001";
-
+    String studentCode = "1";
     public static UserInfoFragment newInstance() {
         return new UserInfoFragment();
     }
@@ -53,6 +56,20 @@ public class UserInfoFragment extends Fragment {
         // Tìm nút "Sửa" và thiết lập sự kiện nhấn
         editButton = root.findViewById(R.id.button_edit);
         editButton.setOnClickListener(v -> showBottomSheetDialog(userInfo));
+        logoutButton = root.findViewById(R.id.button_logout);
+        logoutButton.setOnClickListener(v -> {
+            AlertDialog.Builder dialog = new AlertDialog.Builder(requireContext());
+            dialog.setTitle("Đăng xuất");
+            dialog.setMessage("Bạn có chắc chắn muốn đăng xuất?");
+            dialog.setPositiveButton("Có", (dialogInterface, i) -> {
+                Intent intent = new Intent(getContext(), LoginActivity.class);
+                startActivity(intent);
+            });
+            dialog.setNegativeButton("Không", (dialogInterface, i) -> {
+
+            });
+            dialog.show();
+        });
 
         // Liên kết các thành phần UI
         nameTextView = root.findViewById(R.id.text_name);
@@ -68,6 +85,13 @@ public class UserInfoFragment extends Fragment {
             NavController navController = NavHostFragment.findNavController(UserInfoFragment.this);
             navController.navigate(R.id.navigation_calendar);
         });
+
+        SharedPreferences sharedPreferences = requireContext().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
+        int studentId = sharedPreferences.getInt("studentId", -1);
+        Toast.makeText(getContext(), "Student ID: " + studentId, Toast.LENGTH_SHORT).show();
+        if(studentId != -1){
+               studentCode = studentId + "";
+        }
         database = openDatabase();
 //        addStudent("2022000001", "Nguyễn Văn A", "password123", "avatar.jpg",
 //                1.75f, 65f, "Không", 0, "01/01/2000");
@@ -177,7 +201,7 @@ public class UserInfoFragment extends Fragment {
         Cursor cursor = database.query(
                 "students",              // Tên bảng
                 null,                     // Lấy tất cả các cột
-                "student_code = ?",      // Điều kiện lọc theo student_code
+                "id = ?",      // Điều kiện lọc theo student_code
                 new String[]{studentCode},// Giá trị của student_code sẽ thay vào dấu chấm hỏi
                 null,                     // Không cần nhóm dữ liệu
                 null,                     // Không cần sắp xếp
