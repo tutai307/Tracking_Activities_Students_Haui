@@ -88,7 +88,7 @@ public class UserInfoFragment extends Fragment {
 
         SharedPreferences sharedPreferences = requireContext().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
         int studentId = sharedPreferences.getInt("studentId", -1);
-        Toast.makeText(getContext(), "Student ID: " + studentId, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getContext(), "Student ID: " + studentId, Toast.LENGTH_SHORT).show();
         if(studentId != -1){
                studentCode = studentId + "";
         }
@@ -198,6 +198,7 @@ public class UserInfoFragment extends Fragment {
 
     private void fetchStudentDataByCode(String studentCode) {
         // Truy vấn bảng students để lấy thông tin của sinh viên có student_code cụ thể
+//        Toast.makeText(getContext(), "StudentId = " + studentCode, Toast.LENGTH_SHORT).show();
         Cursor cursor = database.query(
                 "students",              // Tên bảng
                 null,                     // Lấy tất cả các cột
@@ -338,7 +339,7 @@ private void showBottomSheetDialog(UserInfoViewModel userInfo) {
     Button btnEdit = bottomSheetView.findViewById(R.id.btnEdit);
     btnEdit.setOnClickListener(v -> {
         // Lấy dữ liệu từ các EditText
-        String studentCode = studentCodeEditText.getText().toString().trim();
+        String studentCode1 = studentCodeEditText.getText().toString().trim();
         String fullname = fullnameEditText.getText().toString().trim();
         String dob = birthDateEditText.getText().toString().trim();
         double height = Double.parseDouble(heightEditText.getText().toString().trim());
@@ -355,7 +356,7 @@ private void showBottomSheetDialog(UserInfoViewModel userInfo) {
         }
 
         // Cập nhật dữ liệu vào cơ sở dữ liệu
-        updateStudentInfo(studentCode, fullname, dob, height, weight, underlyingDisease, gender);
+        updateStudentInfo(studentCode1, fullname, dob, height, weight, underlyingDisease, gender);
 
         // Cập nhật giao diện người dùng
 //        nameTextView.setText(fullname);
