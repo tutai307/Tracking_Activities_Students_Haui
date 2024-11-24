@@ -80,11 +80,9 @@ public class HealthFragment extends Fragment {
             }
         });
 
-//        arrClass.add(new HealthViewModel("Bình thường", "Thiết kế Web", "Nguyễn Thái Cường", "1,2,3"));
-
         database = openDatabase();
 
-        //        addCourses();
+//        addCourses();
 //        addInstructors();
 //        addClasses();
 //        addDease();
@@ -93,6 +91,7 @@ public class HealthFragment extends Fragment {
         return root;
     }
 
+    //Hàm mở db và lấy dữ liệu
     private SQLiteDatabase openDatabase() {
         // Lấy context của ứng dụng
         Context context = requireContext();
@@ -107,6 +106,7 @@ public class HealthFragment extends Fragment {
         mViewModel = new ViewModelProvider(this).get(HealthViewModel.class);
     }
 
+    //Hàm cập nhật dữ liệu
     private void loadClassesFromDatabase() {
         ArrayList<HealthViewModel> classList = new ArrayList<>();
         arrClass.clear();
@@ -161,6 +161,7 @@ public class HealthFragment extends Fragment {
         adapter.notifyDataSetChanged();
     }
 
+    //Hàm sửa thông tin
     private void updateFormData(String tinhTrang, String ghiChu){
         // Mở cơ sở dữ liệu
         SQLiteDatabase db = openDatabase();
@@ -250,6 +251,7 @@ public class HealthFragment extends Fragment {
 //    adapter.notifyDataSetChanged();
 //}
 
+    //Hàm thêm bệnh
     private void addDease(){
         ContentValues values = new ContentValues();
         values.put("disease", "Bệnh tim");
@@ -258,13 +260,15 @@ public class HealthFragment extends Fragment {
         database.insert("healths", null, values);
         Toast.makeText(getContext(), "Thêm bệnh thành công", Toast.LENGTH_SHORT).show();
     }
-    // Hàm để lấy tên ngày hiện tại
+    // Hàm để lấy ngày hiện tại
     private String getDayOfWeek() {
         Calendar calendar = Calendar.getInstance();
         int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK) - 1; // Lấy giá trị ngày trong tuần (1 = Chủ nhật, 2 = Thứ Hai, ...)
         String[] days = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
         return days[dayOfWeek - 1]; // Trả về tên ngày tương ứng
     }
+
+    // Hàm lấy tên môn học
     private String getCourseName(int courseId, SQLiteDatabase database) {
         Cursor cursor = database.query(
                 "courses",
@@ -284,7 +288,7 @@ public class HealthFragment extends Fragment {
 
         return "Unknown Course";
     }
-
+    //hàm lấy tên giảng viên
     private String getInstructorName(int instructorId, SQLiteDatabase database) {
         Cursor cursor = database.query(
                 "instructors",
