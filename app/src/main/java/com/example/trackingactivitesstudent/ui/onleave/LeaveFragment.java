@@ -2,6 +2,7 @@ package com.example.trackingactivitesstudent.ui.onleave;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,15 +36,12 @@ public class LeaveFragment extends Fragment {
     private ImageButton imbCalendar;
     private ListView lsvOnLeave;
 
-//    private FragmentLeaveNoticeBinding binding;
+    private FragmentLeaveNoticeBinding binding;
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-//        LeaveViewModel leaveViewModel = new ViewModelProvider(requireActivity()).get(LeaveViewModel.class);
-//        binding = FragmentLeaveNoticeBinding.inflate(inflater, container, false);
-//        View root = binding.getRoot();
-
-        View view = inflater.inflate(R.layout.fragment_leave_notice, container, false);
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        LeaveViewModel leaveViewModel = new ViewModelProvider(requireActivity()).get(LeaveViewModel.class);
+        binding = FragmentLeaveNoticeBinding.inflate(inflater, container, false);
+        View view = binding.getRoot();
 
         // Ánh xạ các phần tử
         txvDate = view.findViewById(R.id.txvDate);
@@ -53,73 +51,61 @@ public class LeaveFragment extends Fragment {
         imbCalendar = view.findViewById(R.id.imbCalendar);
         lsvOnLeave = view.findViewById(R.id.lsvOnLeave);
 
-        // Gọi các phương thức khởi tạo
-        setupSpinner();
-        loadLeaveData();
-        setupListeners();
-//        return root;
+        // Khởi tạo DatabaseHelper
+        DatabaseHelper db = new DatabaseHelper(getContext());
+
+        // Hiển thị danh sách class trong Spinner
+        List<ClassItem> classItems = db.getClasses();
+        ArrayAdapter<ClassItem> classAdapter = new ArrayAdapter<>(getContext(),
+                android.R.layout.simple_spinner_item, classItems);
+        classAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spnClass.setAdapter(classAdapter);
+
+        // Hiển thị danh sách onLeave trong ListView
+        updateOnLeaveList(db);
+
+        // Xử lý chọn ngày
+        imbCalendar.setOnClickListener(v -> showDatePicker());
+
+        // Xử lý nút "Lưu"
+        btnSave.setOnClickListener(v -> {
+            String date = txvDate.getText().toString();
+            ClassItem selectedClass = (ClassItem) spnClass.getSelectedItem();
+            String reason = edtReason.getText().toString();
+
+            if (selectedClass != null && !date.isEmpty() && !reason.isEmpty()) {
+                db.addOnLeave(selectedClass.getId(), date, reason, 1, 0); // student_id = 1, status = 0
+                Toast.makeText(getContext(), "Lưu thành công", Toast.LENGTH_SHORT).show();
+                updateOnLeaveList(db);
+            } else {
+                Toast.makeText(getContext(), "Vui lòng điền đầy đủ thông tin", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         return view;
     }
 
-//    @Override
-//    public void onDestroyView() {
-//        super.onDestroyView();
-//        binding = null;
-//    }
+    // Hiển thị DatePickerDialog
+    private void showDatePicker() {
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-    private void setupListeners() {
-        // Lắng nghe sự kiện click Calendar
-        imbCalendar.setOnClickListener(view -> {
-            Calendar calendar = Calendar.getInstance();
-            DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), (datePicker, year, month, day) -> {
-                        String selectedDate = day + "/" + (month + 1) + "/" + year;
-                        txvDate.setText(selectedDate);
-                    },
-                    calendar.get(Calendar.YEAR),
-                    calendar.get(Calendar.MONTH),
-                    calendar.get(Calendar.DAY_OF_MONTH)
-            );
-            datePickerDialog.show();
-        });
-
-        // Lắng nghe sự kiện nhấn nút Lưu
-        btnSave.setOnClickListener(view -> {
-            String date = txvDate.getText().toString();
-            String reason = edtReason.getText().toString();
-
-            CourseModel selectedCourse = (CourseModel) spnClass.getSelectedItem();
-            int classId = selectedCourse.getClassId();
-
-            DatabaseHelper db = new DatabaseHelper(getContext());
-            boolean isInserted = db.insertOnLeave(1, date, classId, reason); // student_id = 1
-
-            if (isInserted) {
-                Toast.makeText(getContext(), "Đã lưu thành công", Toast.LENGTH_SHORT).show();
-                loadLeaveData(); // Cập nhật danh sách
-            } else {
-                Toast.makeText(getContext(), "Lưu thất bại", Toast.LENGTH_SHORT).show();
-            }
-        });
+        DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(),
+                (view, year1, month1, dayOfMonth) -> txvDate.setText(dayOfMonth + "/" + (month1 + 1) + "/" + year1),
+                year, month, day);
+        datePickerDialog.show();
     }
 
-    private void setupSpinner() {
-        DatabaseHelper db = new DatabaseHelper(getContext());
-        List<CourseModel> courses = db.getCourses();
-
-        ArrayAdapter<CourseModel> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, courses);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spnClass.setAdapter(adapter);
-    }
-
-    private void loadLeaveData() {
-        DatabaseHelper db = new DatabaseHelper(getContext());
-        List<OnLeaveModel> leaveList = db.getLeavesForStudent(1); // student_id = 1
-
-        if (leaveList.isEmpty()) {
+    // Cập nhật danh sách onLeave
+    private void updateOnLeaveList(DatabaseHelper db) {
+        List<OnLeaveItem> onLeaveItems = db.getOnLeaves(1); // student_id = 1
+        if (onLeaveItems.isEmpty()) {
             lsvOnLeave.setVisibility(View.GONE);
         } else {
             lsvOnLeave.setVisibility(View.VISIBLE);
-            OnLeaveAdapter adapter = new OnLeaveAdapter(getContext(), R.layout.list_item_onleave, leaveList);
+            OnLeaveAdapter adapter = new OnLeaveAdapter(getContext(), onLeaveItems);
             lsvOnLeave.setAdapter(adapter);
         }
     }

@@ -41,8 +41,7 @@
             android:background="@drawable/rounded_edit_text"
             android:ems="6"
             android:gravity="center"
-            android:text="9/11/2024"
-            android:textSize="16dp" />
+            android:textSize="16sp" />
 
         <ImageButton
             android:id="@+id/imbCalendar"

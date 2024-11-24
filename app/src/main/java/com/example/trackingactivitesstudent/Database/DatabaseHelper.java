@@ -6,8 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.example.trackingactivitesstudent.ui.onleave.CourseModel;
-import com.example.trackingactivitesstudent.ui.onleave.OnLeaveModel;
+import com.example.trackingactivitesstudent.ui.onleave.ClassItem;
+import com.example.trackingactivitesstudent.ui.onleave.OnLeaveItem;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -32,14 +32,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private void copyDatabaseIfNeeded() {
         File dbFile = new File(DATABASE_PATH + DATABASE_NAME);
-        if (!dbFile.exists()) {
-            try {
-                copyDatabase();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+
+        // Nếu cơ sở dữ liệu đã tồn tại, xóa nó trước khi sao chép mới
+        if (dbFile.exists()) {
+            dbFile.delete();  // Xóa cơ sở dữ liệu cũ
+        }
+
+        try {
+            copyDatabase();  // Sao chép cơ sở dữ liệu mới
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
+
 
     private void copyDatabase() throws IOException {
         InputStream input = mContext.getAssets().open(DATABASE_NAME);
@@ -48,7 +53,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             folder.mkdir();
         }
         String outFileName = DATABASE_PATH + DATABASE_NAME;
-        OutputStream output = new FileOutputStream(outFileName);
+            OutputStream output = new FileOutputStream(outFileName);
 
         byte[] buffer = new byte[1024];
         int length;
@@ -77,75 +82,58 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 //        return db.rawQuery(query, new String[]{String.valueOf(studentCode)});
 //    }
 
-    public List<CourseModel> getCourses() {
-        List<CourseModel> courses = new ArrayList<>();
-
+    // Lấy danh sách class_id và course_name cho Spinner
+    public List<ClassItem> getClasses() {
+        List<ClassItem> classList = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
-        String query = "SELECT DISTINCT c.class_id, c.course_name " +
-                "FROM classes c " +
-                "ORDER BY c.course_name ASC";
-
+        String query = "SELECT classes.id, courses.course_name FROM classes " +
+                "JOIN courses ON classes.course_id = courses.id";
         Cursor cursor = db.rawQuery(query, null);
-
-        if (cursor.moveToFirst()) {
-            int classIdIndex = cursor.getColumnIndex("class_id");
-            int courseNameIndex = cursor.getColumnIndex("course_name");
-
-            do {
-                // Lấy dữ liệu từ Cursor
-                int classId = cursor.getInt(classIdIndex);
-                String courseName = cursor.getString(courseNameIndex);
-
-                // Tạo một đối tượng CourseModel từ dữ liệu
-                courses.add(new CourseModel(classId, courseName));
-            } while (cursor.moveToNext());
+        while (cursor.moveToNext()) {
+            int id = cursor.getInt(0);
+            String courseName = cursor.getString(1);
+            classList.add(new ClassItem(id, courseName));
         }
-
         cursor.close();
-        db.close();
-
-        return courses;
+        return classList;
     }
 
-    public List<OnLeaveModel> getLeavesForStudent(int studentId) {
-        List<OnLeaveModel> leaveList = new ArrayList<>();
+    // Truy vấn dữ liệu để hiển thị trong ListView
+    public List<OnLeaveItem> getOnLeaves(int studentId) {
+        List<OnLeaveItem> leaveList = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
-
-        String query = "SELECT c.course_name, o.time_in_day, o.instructors, o.reason, o.date " +
-                "FROM onleave o " +
-                "JOIN courses c ON o.class_id = c.class_id " +
-                "WHERE o.student_id = ?";
+        String query = "SELECT courses.course_name, classes.time_in_day, instructors.fullname, " +
+                "onleaves.reason, onleaves.date " +
+                "FROM onleaves " +
+                "JOIN classes ON onleaves.class_id = classes.id " +
+                "JOIN courses ON classes.course_id = courses.id " +
+                "JOIN instructors ON classes.instructor_id = instructors.id " +
+                "WHERE onleaves.student_id = ?";
         Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(studentId)});
-
-        if (cursor.moveToFirst()) {
-            do {
-                leaveList.add(new OnLeaveModel(
-                        cursor.getString(0), // course_name
-                        cursor.getString(1), // time_in_day
-                        cursor.getString(2), // instructors
-                        cursor.getString(3), // reason
-                        cursor.getString(4)  // date
-                ));
-            } while (cursor.moveToNext());
+        while (cursor.moveToNext()) {
+            String courseName = cursor.getString(0);
+            String timeInDay = cursor.getString(1);
+            String instructorName = cursor.getString(2);
+            String reason = cursor.getString(3);
+            String date = cursor.getString(4);
+            leaveList.add(new OnLeaveItem(courseName, timeInDay, instructorName, reason, date));
         }
         cursor.close();
         return leaveList;
     }
 
-    public boolean insertOnLeave(int studentId, String date, int classId, String reason) {
+    // Thêm bản ghi vào bảng onleaves
+    public void addOnLeave(int classId, String date, String reason, int studentId, int status) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-
-        values.put("student_id", studentId);
-        values.put("date", date);
         values.put("class_id", classId);
+        values.put("date", date);
         values.put("reason", reason);
-        values.put("status", "Pending");
+        values.put("student_id", studentId);
+        values.put("status", status);
         values.put("created_at", System.currentTimeMillis());
         values.put("updated_at", System.currentTimeMillis());
-
-        long result = db.insert("onleave", null, values);
-        return result != -1;
+        db.insert("onleaves", null, values);
     }
 
 }
