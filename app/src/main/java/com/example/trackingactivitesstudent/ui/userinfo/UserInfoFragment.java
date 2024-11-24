@@ -88,7 +88,6 @@ public class UserInfoFragment extends Fragment {
 
         SharedPreferences sharedPreferences = requireContext().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
         int studentId = sharedPreferences.getInt("studentId", -1);
-//        Toast.makeText(getContext(), "Student ID: " + studentId, Toast.LENGTH_SHORT).show();
         if(studentId != -1){
                studentCode = studentId + "";
         }
@@ -211,27 +210,6 @@ public class UserInfoFragment extends Fragment {
 
         // Kiểm tra xem có sinh viên nào thỏa mãn điều kiện hay không
         if (cursor != null && cursor.moveToFirst()) {
-//            // Lấy chỉ số cột từ Cursor
-//            int studentCodeIndex = cursor.getColumnIndex("student_code");
-//            int fullNameIndex = cursor.getColumnIndex("fullname");
-//            int genderIndex = cursor.getColumnIndex("gender");
-//            int dobIndex = cursor.getColumnIndex("dob");
-//            int heightIndex = cursor.getColumnIndex("height");
-//            int weightIndex = cursor.getColumnIndex("weight");
-//
-//            // Lấy dữ liệu từ cursor
-//            if (studentCodeIndex != -1 && fullNameIndex != -1 && genderIndex != -1 && dobIndex != -1) {
-//                nameTextView.setText(cursor.getString(fullNameIndex));
-//                studentCodeTextView.setText(cursor.getString(studentCodeIndex));
-//                Toast.makeText(getContext(), "Tìm thấy và có chạy!", Toast.LENGTH_SHORT).show();
-////
-////                // Đặt dữ liệu vào TextView để hiển thị
-////                studentDataTextView.setText(data.toString());
-//            } else {
-////                studentDataTextView.setText("Dữ liệu không hợp lệ.");
-//                Toast.makeText(getContext(), "Có lỗi xảy ra", Toast.LENGTH_SHORT).show();
-//            }
-
             userInfo = new UserInfoViewModel(
                     cursor.getInt(cursor.getColumnIndexOrThrow("student_code")),
                     cursor.getString(cursor.getColumnIndexOrThrow("password")),
@@ -257,7 +235,6 @@ public class UserInfoFragment extends Fragment {
             text_weight.setText(userInfo.getWeight() + "");
         } else {
             // Nếu không tìm thấy sinh viên, hiển thị thông báo
-//            studentDataTextView.setText("Không tìm thấy sinh viên với mã này.");
             Toast.makeText(getContext(), "Không tìm thấy sinh viên!", Toast.LENGTH_SHORT).show();
         }
 
@@ -271,30 +248,8 @@ public class UserInfoFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mViewModel = new ViewModelProvider(this).get(UserInfoViewModel.class);
-        // Giả sử bạn có thể lấy dữ liệu từ ViewModel và gán cho các TextView
-
-//        nameTextView.setText("Chạy");
-//        studentCodeTextView.setText("2021604405");
-//        departmentTextView.setText("Khoa: Khoa Công nghệ thông tin");
     }
 
-//    private void showBottomSheetDialog() {
-//        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(requireContext());
-//        View bottomSheetView = getLayoutInflater().inflate(R.layout.bottom_sheet_layout, null);
-//        bottomSheetDialog.setContentView(bottomSheetView);
-//
-//        // Tìm ImageView của nút đóng và thiết lập sự kiện OnClick
-//        Button closeButton = bottomSheetView.findViewById(R.id.closeButton);
-//        closeButton.setOnClickListener(v -> bottomSheetDialog.dismiss());
-//        Button btnDong = bottomSheetView.findViewById(R.id.btnDong);
-//        btnDong.setOnClickListener(v -> bottomSheetDialog.dismiss());
-//
-//        // Khởi tạo EditText cho ngày sinh
-//        EditText birthDateEditText = bottomSheetView.findViewById(R.id.birthDateEditText);
-//        birthDateEditText.setOnClickListener(v -> showDatePicker(birthDateEditText));
-//
-//        bottomSheetDialog.show();
-//    }
 private void showBottomSheetDialog(UserInfoViewModel userInfo) {
     // Tạo Bottom Sheet Dialog
     BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(requireContext());
@@ -358,12 +313,6 @@ private void showBottomSheetDialog(UserInfoViewModel userInfo) {
         // Cập nhật dữ liệu vào cơ sở dữ liệu
         updateStudentInfo(studentCode1, fullname, dob, height, weight, underlyingDisease, gender);
 
-        // Cập nhật giao diện người dùng
-//        nameTextView.setText(fullname);
-//        text_dob.setText(dob);
-//        text_gender.setText(gender == 0 ? "Nam" : "Nữ");
-//        text_height.setText(String.valueOf(height));
-//        text_weight.setText(String.valueOf(weight));
         fetchStudentDataByCode(studentCode);
 
         // Đóng BottomSheetDialog
