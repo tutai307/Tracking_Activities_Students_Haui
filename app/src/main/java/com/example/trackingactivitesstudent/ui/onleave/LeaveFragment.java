@@ -1,6 +1,8 @@
 package com.example.trackingactivitesstudent.ui.onleave;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,6 +42,9 @@ public class LeaveFragment extends Fragment {
         LeaveViewModel leaveViewModel = new ViewModelProvider(requireActivity()).get(LeaveViewModel.class);
         binding = FragmentLeaveNoticeBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
+
+        SharedPreferences sharedPreferences = requireContext().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
+        int studentId = sharedPreferences.getInt("studentId", -1);
 
         // Ánh xạ các phần tử
         txvDate = view.findViewById(R.id.txvDate);
