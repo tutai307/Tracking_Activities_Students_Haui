@@ -158,19 +158,17 @@ public class HealthFragment extends Fragment {
                 String classCode = cursor.getString(cursor.getColumnIndexOrThrow("class_code"));
                 String days = cursor.getString(cursor.getColumnIndexOrThrow("days_in_week"));
                 String time = cursor.getString(cursor.getColumnIndexOrThrow("time_in_day"));
-//                String created_at = cursor1.getString(cursor.getColumnIndexOrThrow("created_at"));
-//                String disease = cursor1.getString(cursor.getColumnIndexOrThrow("disease"));
                 int courseId = cursor.getInt(cursor.getColumnIndexOrThrow("course_id"));
                 int instructorId = cursor.getInt(cursor.getColumnIndexOrThrow("instructor_id"));
                 String studentId = cursor.getString(cursor.getColumnIndexOrThrow("created_at"));
                 String tinhtrang = "Bình thường";
                 String disease = "Bình thường";
                 // Truy vấn bảng healths để lấy thông tin bệnh của sinh viên
-                Cursor cursor1 = database.query("healths", new String[]{"created_at", "disease"}, null, null, null, null, null);
+                Cursor cursor1 = database.query("healths", new String[]{"status", "note"}, null, null, null, null, null);
                 if (cursor1 != null && cursor1.moveToFirst()) {
                     // Lấy dữ liệu bệnh từ bảng healths
-                    tinhtrang = cursor1.getString(cursor1.getColumnIndexOrThrow("created_at"));
-                    disease = cursor1.getString(cursor1.getColumnIndexOrThrow("disease"));
+                    tinhtrang = cursor1.getString(cursor1.getColumnIndexOrThrow("status"));
+                    disease = cursor1.getString(cursor1.getColumnIndexOrThrow("note"));
                     cursor1.close();
                 }
 
@@ -209,8 +207,8 @@ public class HealthFragment extends Fragment {
 
         // Tạo đối tượng ContentValues chứa các thông tin cần cập nhật
         ContentValues values = new ContentValues();
-        values.put("created_at", tinhTrang);
-        values.put("disease", ghiChu);
+        values.put("status", tinhTrang);
+        values.put("note", ghiChu);
         int rowsAffected = db.update("healths", values, "id = ?", new String[]{"1"});
 
         // Kiểm tra kết quả cập nhật
@@ -223,80 +221,12 @@ public class HealthFragment extends Fragment {
         // Đóng cơ sở dữ liệu sau khi sử dụng
         db.close();
     }
-//private void loadClassesFromDatabase() {
-//    ArrayList<HealthViewModel> classList = new ArrayList<>();
-//    arrClass.clear();
-//
-//    // Mở cơ sở dữ liệu
-//    SQLiteDatabase database = openDatabase();
-//    // Lấy ngày hiện tại
-//    String today = getDayOfWeek();
-//
-//    // Truy vấn bảng classes với điều kiện LIKE
-//    Cursor cursor = database.query(
-//            "classes", // Tên bảng
-//            new String[]{"class_code", "time_in_day", "course_id", "instructor_id", "days_in_week", "student_id"}, // Các cột muốn lấy
-//            "days_in_week LIKE ?", // Điều kiện WHERE
-//            new String[]{"%" + today + "%"}, // Truyền ngày hiện tại vào điều kiện LIKE
-//            null, // GROUP BY
-//            null, // HAVING
-//            null // ORDER BY
-//    );
-//
-//    if (cursor != null) {
-//        while (cursor.moveToNext()) {
-//            int dayMo = cursor.getInt(cursor.getColumnIndexOrThrow("days_in_week"));
-//            int timeMo = cursor.getInt(cursor.getColumnIndexOrThrow("time_in_day"));
-//            int courseIdMo = cursor.getInt(cursor.getColumnIndexOrThrow("course_id"));
-//            int instructorIdMo = cursor.getInt(cursor.getColumnIndexOrThrow("instructor_id"));
-//
-//            if(dayMo >= 0 && timeMo >= 0 && courseIdMo >= 0 && instructorIdMo >= 0){
-//                String days = cursor.getString(cursor.getColumnIndexOrThrow("days_in_week"));
-//                String time = cursor.getString(cursor.getColumnIndexOrThrow("time_in_day"));
-//                int courseId = cursor.getInt(cursor.getColumnIndexOrThrow("course_id"));
-//                int instructorId = cursor.getInt(cursor.getColumnIndexOrThrow("instructor_id"));
-//
-//                String disease = "Bình thường"; // Mặc định bệnh là bình thường nếu không tìm thấy
-//                String created_at = "Bình thường"; // Mặc định bệnh là bình thường nếu không tìm thấy
-//
-////            if (cursor1 != null && cursor1.moveToFirst()) {
-////                // Lấy dữ liệu bệnh từ bảng healths
-////                created_at = cursor1.getString(cursor1.getColumnIndexOrThrow("created_at"));
-////                disease = cursor1.getString(cursor1.getColumnIndexOrThrow("disease"));
-////                cursor1.close();
-////            }
-//
-//                // Lấy tên khóa học từ bảng courses
-//                String courseName = getCourseName(courseId, database);
-//                // Lấy tên giáo viên từ bảng instructors
-//                String instructorName = getInstructorName(instructorId, database);
-//
-//                // Thêm vào danh sách lớp học
-//                arrClass.add(new HealthViewModel(created_at, disease, courseName, instructorName, time));
-//            }
-////            // Truy vấn bảng healths để lấy thông tin bệnh của sinh viên
-////            Cursor cursor1 = database.query(
-////                    "healths", // Tên bảng healths
-////                    new String[]{"created_at", "disease"}, // Các cột muốn lấy
-////                    "student_id = ?", // Điều kiện WHERE
-////                    new String[]{String.valueOf(studentId)}, // Truyền student_id vào điều kiện WHERE
-////                    null, // GROUP BY
-////                    null, // HAVING
-////                    null // ORDER BY
-////            );
-//
-//
-//        }
-//        cursor.close();
-//    }
-//    adapter.notifyDataSetChanged();
-//}
 
     //Hàm thêm bệnh
     private void addDease(){
         ContentValues values = new ContentValues();
-        values.put("disease", "Bệnh tim");
-        values.put("created_at", "Ốm");
+        values.put("note", "Bệnh tim");
+        values.put("status", "Ốm");
         values.put("updated_at", "2024-11-20");
         database.insert("healths", null, values);
         Toast.makeText(getContext(), "Thêm bệnh thành công", Toast.LENGTH_SHORT).show();

@@ -89,7 +89,6 @@ public class CalendarFragment extends Fragment {
         int studentId = sharedPreferences.getInt("studentId", -1);
         if(studentId != -1){
             student_Id = studentId + "";
-            Toast.makeText(getContext(), student_Id + " :Studentid", Toast.LENGTH_SHORT).show();
         }
 
         selectToday(allLayouts, dayOfWeek);
@@ -108,84 +107,6 @@ public class CalendarFragment extends Fragment {
 
 
     }
-
-//    private void loadClassesFromDatabase() {
-//        ArrayList<CalendarViewModel> classList = new ArrayList<>();
-//
-//        // Mở cơ sở dữ liệu
-//        SQLiteDatabase database = openDatabase();
-//
-//        // Truy vấn các lớp học
-//        Cursor cursor = database.query("classes", new String[]{"id", "class_code", "days_in_week", "time_in_day", "course_id", "instructor_id"},
-//                null, null, null, null, null);
-//
-//        if (cursor != null && cursor.moveToFirst()) {
-//            do {
-//                // Lấy chỉ số của các cột
-//                int classIdIndex = cursor.getColumnIndex("id");
-//                int classCodeIndex = cursor.getColumnIndex("class_code");
-//                int daysInWeekIndex = cursor.getColumnIndex("days_in_week");
-//                int timeInDayIndex = cursor.getColumnIndex("time_in_day");
-//                int courseIdIndex = cursor.getColumnIndex("course_id");
-//                int instructorIdIndex = cursor.getColumnIndex("instructor_id");
-//
-//                // Kiểm tra các chỉ số cột hợp lệ
-//                if (classIdIndex >= 0 && classCodeIndex >= 0 && daysInWeekIndex >= 0 && timeInDayIndex >= 0 && courseIdIndex >= 0 && instructorIdIndex >= 0) {
-//                    int classId = cursor.getInt(classIdIndex);
-//                    String classCode = cursor.getString(classCodeIndex);
-//                    String daysInWeek = cursor.getString(daysInWeekIndex);
-//                    String timeInDay = cursor.getString(timeInDayIndex);
-//                    int courseId = cursor.getInt(courseIdIndex);
-//                    int instructorId = cursor.getInt(instructorIdIndex);
-//
-//                    // Lấy thông tin khóa học
-//                    Cursor courseCursor = database.query("courses", new String[]{"course_name"},
-//                            "id = ?", new String[]{String.valueOf(courseId)}, null, null, null);
-//
-//                    String courseName = "";
-//                    if (courseCursor != null && courseCursor.moveToFirst()) {
-//                        int courseNameIndex = courseCursor.getColumnIndex("course_name");
-//                        if (courseNameIndex >= 0) {
-//                            courseName = courseCursor.getString(courseNameIndex);
-//                        }
-//                    }
-//                    if (courseCursor != null) {
-//                        courseCursor.close();
-//                    }
-//
-//                    // Lấy thông tin giảng viên
-//                    Cursor instructorCursor = database.query("instructors", new String[]{"fullname"},
-//                            "id = ?", new String[]{String.valueOf(instructorId)}, null, null, null);
-//
-//                    String instructorName = "";
-//                    if (instructorCursor != null && instructorCursor.moveToFirst()) {
-//                        int instructorNameIndex = instructorCursor.getColumnIndex("fullname");
-//                        if (instructorNameIndex >= 0) {
-//                            instructorName = instructorCursor.getString(instructorNameIndex);
-//                        }
-//                    }
-//                    if (instructorCursor != null) {
-//                        instructorCursor.close();
-//                    }
-//
-//                    // Tạo đối tượng CalendarViewModel và thêm vào danh sách
-//                    CalendarViewModel calendarViewModel = new CalendarViewModel(classCode, daysInWeek, timeInDay, courseName, instructorName);
-//                    classList.add(calendarViewModel);
-//                }
-//            } while (cursor.moveToNext());
-//        }
-//        if (cursor != null) {
-//            cursor.close();
-//        }
-//
-//        // Cập nhật adapter với danh sách lớp học đã lấy được
-//        arrClass.clear();
-//        arrClass.addAll(classList);
-//        adapter.notifyDataSetChanged();
-//
-//        // Đóng cơ sở dữ liệu sau khi hoàn tất
-//        database.close();
-//    }
 
     private void loadClassesFromDatabase() {
         ArrayList<CalendarViewModel> classList = new ArrayList<>();
@@ -273,18 +194,7 @@ public class CalendarFragment extends Fragment {
 
 
 
-    // Hàm để thay đổi background khi chọn ngày
-//    private void selectDay(LinearLayout selectedLayout, LinearLayout[] allLayouts) {
-//        // Đặt background cho ngày được chọn
-//        selectedLayout.setBackgroundResource(R.drawable.rounded_green_background);
-//
-//        // Reset background cho các ngày còn lại
-//        for (LinearLayout layout : allLayouts) {
-//            if (layout != selectedLayout) {
-//                layout.setBackgroundResource(android.R.color.white); // Hoặc màu trắng, hoặc trạng thái mặc định
-//            }
-//        }
-//    }
+
     private void selectDay(LinearLayout selectedLayout, LinearLayout[] allLayouts) {
         // Đặt background cho ngày được chọn
         selectedLayout.setBackgroundResource(R.drawable.rounded_green_background);
@@ -322,7 +232,6 @@ public class CalendarFragment extends Fragment {
             for (CalendarViewModel c : arrClass) {
                 if (!c.getStudentId().equals(student_Id)) {
                     toRemove.add(c);
-                    Toast.makeText(getContext(), "Xóa " + c.getClassCode(), Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -365,7 +274,6 @@ public class CalendarFragment extends Fragment {
                 selectedLayout = cnLayout;
                 break;
         }
-        Toast.makeText(getContext(), "Có." + dayOfWeek, Toast.LENGTH_SHORT).show();
         // Nếu có ngày tương ứng, gọi hàm selectDay để đánh dấu ngày hôm nay
         if (selectedLayout != null) {
             selectDay(selectedLayout, allLayouts);
