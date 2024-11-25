@@ -12,16 +12,18 @@ public class HealthViewModel extends ViewModel {
     private String courseName;
     private String instructorName;
     private String time;
+    private String studentId;
 
 
     public HealthViewModel() {
     }
-    public HealthViewModel(String tinhTrang, String disease, String courseName, String instructorName, String time) {
+    public HealthViewModel(String tinhTrang, String disease, String courseName, String instructorName, String time, String studentId) {
         this.tinhTrang = tinhTrang;
         this.disease = disease;
         this.courseName = courseName;
         this.instructorName = instructorName;
         this.time = time;
+        this.studentId = studentId;
     }
     public String getTinhTrang() {
         return tinhTrang;
@@ -61,4 +63,11 @@ public class HealthViewModel extends ViewModel {
     public void setTime(String time) {
         this.time = time;
     }
+    public String getStudentId() {
+        return studentId;
+    }
+    public void setStudentId(String studentId) {
+        this.studentId = studentId;
+    }
+
 }

@@ -4,6 +4,7 @@ import static android.database.sqlite.SQLiteDatabase.openDatabase;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -45,7 +46,7 @@ public class HealthFragment extends Fragment {
     HealthAdapter adapter = null;
     ArrayList<HealthViewModel> arrClass = new ArrayList<>();
     ArrayAdapter<String> adapterSpinner;
-
+    String studentCode;
     public static HealthFragment newInstance() {
         return new HealthFragment();
     }
@@ -80,6 +81,12 @@ public class HealthFragment extends Fragment {
             }
         });
 
+        SharedPreferences sharedPreferences = requireContext().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
+        int studentId = sharedPreferences.getInt("studentId", -1);
+        if(studentId != -1){
+            studentCode = studentId + "";
+        }
+
         database = openDatabase();
 
 //        addCourses();
@@ -113,13 +120,31 @@ public class HealthFragment extends Fragment {
 
         // Mở cơ sở dữ liệu
         SQLiteDatabase database = openDatabase();
+        // Kiểm tra xem mã sinh viên đã tồn tại trong cơ sở dữ liệu chưa
+        Cursor cursor2 = database.query(
+                "students",              // Tên bảng
+                null,                     // Lấy tất cả các cột
+                "id = ?",      // Điều kiện lọc theo student_code
+                new String[]{studentCode},// Giá trị của student_code sẽ thay vào dấu chấm hỏi
+                null,                     // Không cần nhóm dữ liệu
+                null,                     // Không cần sắp xếp
+                null                      // Không cần sắp xếp theo thứ tự
+        );
+        if (cursor2 != null && cursor2.moveToFirst()) {
+            String studentName = cursor2.getString(cursor2.getColumnIndexOrThrow("fullname"));
+            txtHello.setText("Xin chào, " + studentName);
+            cursor2.close();
+        } else {
+            Toast.makeText(getContext(), "Không tìm thấy sinh viên!", Toast.LENGTH_SHORT).show();
+        }
+
         // Lấy ngày hiện tại
         String today = getDayOfWeek();
 
         // Truy vấn bảng classes với điều kiện LIKE
         Cursor cursor = database.query(
                 "classes", // Tên bảng
-                new String[]{"class_code", "time_in_day", "course_id", "instructor_id", "days_in_week"}, // Các cột muốn lấy
+                new String[]{"class_code", "time_in_day", "course_id", "instructor_id", "days_in_week", "created_at"}, // Các cột muốn lấy
                 "days_in_week LIKE ?", // Điều kiện WHERE
                 new String[]{"%" + today + "%"}, // Truyền ngày hiện tại vào điều kiện LIKE
                 null, // GROUP BY
@@ -137,6 +162,7 @@ public class HealthFragment extends Fragment {
 //                String disease = cursor1.getString(cursor.getColumnIndexOrThrow("disease"));
                 int courseId = cursor.getInt(cursor.getColumnIndexOrThrow("course_id"));
                 int instructorId = cursor.getInt(cursor.getColumnIndexOrThrow("instructor_id"));
+                String studentId = cursor.getString(cursor.getColumnIndexOrThrow("created_at"));
                 String tinhtrang = "Bình thường";
                 String disease = "Bình thường";
                 // Truy vấn bảng healths để lấy thông tin bệnh của sinh viên
@@ -144,9 +170,10 @@ public class HealthFragment extends Fragment {
                 if (cursor1 != null && cursor1.moveToFirst()) {
                     // Lấy dữ liệu bệnh từ bảng healths
                     tinhtrang = cursor1.getString(cursor1.getColumnIndexOrThrow("created_at"));
-                     disease = cursor1.getString(cursor1.getColumnIndexOrThrow("disease"));
+                    disease = cursor1.getString(cursor1.getColumnIndexOrThrow("disease"));
                     cursor1.close();
                 }
+
 
                 // Lấy tên khóa học từ bảng courses
                 String courseName = getCourseName(courseId, database);
@@ -154,10 +181,24 @@ public class HealthFragment extends Fragment {
                 String instructorName = getInstructorName(instructorId, database);
 
                 // Thêm vào danh sách lớp học
-                arrClass.add(new HealthViewModel(tinhtrang, disease, courseName, instructorName, time));
+                arrClass.add(new HealthViewModel(tinhtrang, disease, courseName, instructorName, time, studentId));
             }
             cursor.close();
         }
+
+        if (!studentCode.isEmpty()) {
+            // Tạo một danh sách tạm để lưu các phần tử cần xóa
+            ArrayList<HealthViewModel> toRemove = new ArrayList<>();
+
+            for (HealthViewModel c : arrClass) {
+                if ((c.getStudentId() == null) || !c.getStudentId().equals(studentCode)) {
+                    toRemove.add(c);
+                }
+            }
+            // Xóa các phần tử trong danh sách tạm
+            arrClass.removeAll(toRemove);
+        }
+
         adapter.notifyDataSetChanged();
     }
 
@@ -263,7 +304,7 @@ public class HealthFragment extends Fragment {
     // Hàm để lấy ngày hiện tại
     private String getDayOfWeek() {
         Calendar calendar = Calendar.getInstance();
-        int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK) - 1; // Lấy giá trị ngày trong tuần (1 = Chủ nhật, 2 = Thứ Hai, ...)
+        int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK); // Lấy giá trị ngày trong tuần (1 = Chủ nhật, 2 = Thứ Hai, ...)
         String[] days = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
         return days[dayOfWeek - 1]; // Trả về tên ngày tương ứng
     }
