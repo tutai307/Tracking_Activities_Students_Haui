@@ -126,7 +126,7 @@
                         android:id="@+id/noScheduleText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Không có lịch!"
+                        android:text="Xem lịch hôm nay!"
                         android:textSize="14sp"
                         android:textColor="@android:color/black" />
 
@@ -134,7 +134,7 @@
                         android:id="@+id/viewMoreText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Xem thêm TKB"
+                        android:text="Xem TKB"
                         android:textSize="14sp"
                         android:textColor="@color/colorPrimary"
                         android:layout_marginStart="4dp" />

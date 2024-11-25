@@ -1,4 +1,4 @@
-package com.example.trackingactivitesstudent.ui.leave;
+package com.example.trackingactivitesstudent.ui.onleave;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
