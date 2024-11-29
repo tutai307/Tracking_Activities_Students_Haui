@@ -9,6 +9,7 @@ import android.util.Log;
 
 import com.example.trackingactivitesstudent.ui.onleave.ClassItem;
 import com.example.trackingactivitesstudent.ui.onleave.OnLeaveItem;
+import com.example.trackingactivitesstudent.ui.tracking.Tracker;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -191,6 +192,49 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         int rowsAffected = db.update("trackers", values, "created_at = ? AND student_id = ?", new String[]{createdAt, String.valueOf(studentId)});
         return rowsAffected > 0;
     }
+
+    public List<Tracker> getTrackersByDateRangeAndStudent(String startDate, String endDate, int studentId) {
+        List<Tracker> trackerList = new ArrayList<>();
+        SQLiteDatabase database = null;
+        Cursor cursor = null;
+
+        try {
+            database = this.getReadableDatabase();
+            String query = "SELECT * FROM trackers WHERE student_id = ? AND created_at BETWEEN ? AND ?";
+            cursor = database.rawQuery(query, new String[]{String.valueOf(studentId), startDate, endDate});
+
+            if (cursor != null && cursor.moveToFirst()) {
+                do {
+                    // Lấy dữ liệu từ các cột
+                    int id = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
+                    boolean isEnoughWater = cursor.getInt(cursor.getColumnIndexOrThrow("is_enought_water")) == 1;
+                    double liter = cursor.getDouble(cursor.getColumnIndexOrThrow("liter"));
+                    boolean isDoingExercise = cursor.getInt(cursor.getColumnIndexOrThrow("is_doing_exercise")) == 1;
+                    int exerciseSpan = cursor.getInt(cursor.getColumnIndexOrThrow("exercise_span"));
+                    String createdAt = cursor.getString(cursor.getColumnIndexOrThrow("created_at"));
+                    String updatedAt = cursor.getString(cursor.getColumnIndexOrThrow("updated_at"));
+
+                    // Tạo đối tượng Tracker
+                    Tracker tracker = new Tracker(id, isEnoughWater, liter, isDoingExercise, exerciseSpan, createdAt, updatedAt, studentId);
+
+                    // Thêm vào danh sách
+                    trackerList.add(tracker);
+                } while (cursor.moveToNext());
+            }
+        } catch (Exception e) {
+            Log.e("Database Error", "Error fetching trackers: " + e.getMessage());
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+            if (database != null) {
+                database.close();
+            }
+        }
+        return trackerList;
+    }
+
+
 
     public Cursor getStudentInfo(int studentCode) {
         SQLiteDatabase db = this.getReadableDatabase();

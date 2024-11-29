@@ -12,16 +12,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="16sp"
-        android:textColor="#000"
+        android:textColor="@color/key_green"
         android:textStyle="bold"
         android:padding="8dp"
+        android:text="Từ dd/mm/yyyy - dd/mm/yyyy"
         android:gravity="center" />
 
     <!-- Danh sách lịch sử -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewHistory"
+    <ListView
+        android:id="@+id/lvHistory"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="8dp"
-        android:clipToPadding="false" />
+        android:layout_height="wrap_content">
+
+    </ListView>
 </LinearLayout>

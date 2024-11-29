@@ -1,5 +1,7 @@
 package com.example.trackingactivitesstudent.ui.exercise;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -21,10 +23,13 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.trackingactivitesstudent.Database.DatabaseHelper;
 import com.example.trackingactivitesstudent.R;
 import com.example.trackingactivitesstudent.databinding.FragmentExerciseBinding;
+import com.example.trackingactivitesstudent.ui.userinfo.UserInfoFragment;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -64,7 +69,7 @@ public class ExerciseFragment extends Fragment {
         txtEndDate = root.findViewById(R.id.txtEndDate);
         imbStart = root.findViewById(R.id.imbStart);
         imbEnd = root.findViewById(R.id.imbEnd);
-        SharedPreferences sharedPreferences = requireContext().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = requireContext().getSharedPreferences("UserPrefs", MODE_PRIVATE);
         int studentId = sharedPreferences.getInt("studentId", -1);
         txtHeight = root.findViewById(R.id.txtHeight);
         txtWeight = root.findViewById(R.id.txtWeight);
@@ -101,8 +106,8 @@ public class ExerciseFragment extends Fragment {
             Toast.makeText(getContext(), "ID sinh viên không hợp lệ", Toast.LENGTH_SHORT).show();
         }
 
-        imbStart.setOnClickListener(v -> showDatePickerDialog(startDate, txtStartDate));
-        imbEnd.setOnClickListener(v -> showDatePickerDialog(endDate, txtEndDate));
+        imbStart.setOnClickListener(v -> showDatePickerDialog(startDate, txtStartDate, "startDate"));
+        imbEnd.setOnClickListener(v -> showDatePickerDialog(endDate, txtEndDate, "endDate"));
 
 
         chkDrinkWater.setOnCheckedChangeListener((buttonView, isChecked) -> {
@@ -182,44 +187,48 @@ public class ExerciseFragment extends Fragment {
         Log.d("LoginActivity", "Student ID saved: " + studentId);
 
         btnViewHistory.setOnClickListener(view -> {
+            String startDate = txtStartDate.getText().toString();
+            String endDate = txtEndDate.getText().toString();
+
+            if (startDate.isEmpty() || endDate.isEmpty()) {
+                Toast.makeText(getActivity(), "Vui lòng chọn ngày bắt đầu và ngày kết thúc.", Toast.LENGTH_SHORT).show();
+                return; // Dừng lại nếu ngày chưa được chọn
+            }
+
             if (isEndDateBeforeStartDate()) {
-                // Nếu không có studentId, có thể là người dùng chưa đăng nhập, thông báo lỗi
-                Toast.makeText(getActivity(), "Chọn ngày kết thúc lớn hơn ngày bắt đầu.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Chọn ngày kết thúc lớn hơn hoặc bằng ngày bắt đầu.", Toast.LENGTH_SHORT).show();
             } else {
-                // Chuyển tới Activity để xem lịch sử
-                String sDate = txtStartDate.getText().toString();
-                String eDate = txtEndDate.getText().toString();
-
-                TrackingFragment trackingFragment = new TrackingFragment();
-                Bundle bundle = new Bundle();
-                bundle.putInt("studentId", studentId);
-                bundle.putString("startDate", sDate);
-                bundle.putString("endDate", eDate);
-                trackingFragment.setArguments(bundle);
-
-                // Thay thế Fragment hiện tại bằng TrackingFragment
-//                requireActivity().getSupportFragmentManager()
-//                        .beginTransaction()
-//                        .replace(R.id.fragment_container, trackingFragment) // R.id.fragment_container là ID của container chứa Fragment
-//                        .addToBackStack(null) // Cho phép quay lại Fragment trước đó
-//                        .commit();
+                NavController navController = NavHostFragment.findNavController(ExerciseFragment.this);
+                navController.navigate(R.id.navigation_tracking);
             }
         });
+
         return root;
     }
 
-    // Hàm hiển thị DatePicker
-    private void showDatePickerDialog(Calendar date, TextView dateTextView) {
-        new DatePickerDialog(getContext(),
-                (view, year, month, dayOfMonth) -> {
-                    date.set(year, month, dayOfMonth);
-                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-                    dateTextView.setText(sdf.format(date.getTime()));
-                },
-                date.get(Calendar.YEAR),
-                date.get(Calendar.MONTH),
-                date.get(Calendar.DAY_OF_MONTH)).show();
+    private void showDatePickerDialog(Calendar date, TextView txtDate, String key) {
+        DatePickerDialog datePickerDialog = new DatePickerDialog(requireContext(), (view, year, month, dayOfMonth) -> {
+            // Cập nhật ngày được chọn vào Calendar
+            date.set(Calendar.YEAR, year);
+            date.set(Calendar.MONTH, month);
+            date.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+            // Hiển thị ngày trên TextView
+            String selectedDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(date.getTime());
+            txtDate.setText(selectedDate);
+
+            // Cập nhật ngày vào SharedPreferences
+            SharedPreferences sharedDate = requireActivity().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedDate.edit();
+            editor.putString(key, selectedDate); // Lưu ngày theo định dạng yyyy-MM-dd
+            editor.apply();
+
+        }, date.get(Calendar.YEAR), date.get(Calendar.MONTH), date.get(Calendar.DAY_OF_MONTH));
+
+        datePickerDialog.show();
     }
+
+
 
     // Hàm kiểm tra ngày kết thúc có nhỏ hơn ngày bắt đầu không
     private boolean isEndDateBeforeStartDate() {
