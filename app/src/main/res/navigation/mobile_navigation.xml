@@ -61,4 +61,10 @@
         android:name="com.example.trackingactivitesstudent.ui.onleave.LeaveFragment"
         android:label="@string/title_LeaveNotice"
         tools:layout="@layout/fragment_leave_notice" />
+
+    <fragment
+        android:id="@+id/navigation_tracking"
+        android:name="com.example.trackingactivitesstudent.ui.tracking.TrackingFragment"
+        android:label="@string/title_LeaveNotice"
+        tools:layout="@layout/fragment_tracking" />
 </navigation>

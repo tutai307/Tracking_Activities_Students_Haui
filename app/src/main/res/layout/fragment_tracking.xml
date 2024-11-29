@@ -1,0 +1,28 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="8dp"
+    android:background="#F8FFF1">
+
+    <!-- Hiển thị ngày bắt đầu và kết thúc -->
+    <TextView
+        android:id="@+id/tvDateRange"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textColor="@color/key_green"
+        android:textStyle="bold"
+        android:padding="8dp"
+        android:text="Từ dd/mm/yyyy - dd/mm/yyyy"
+        android:gravity="center" />
+
+    <!-- Danh sách lịch sử -->
+    <ListView
+        android:id="@+id/lvHistory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </ListView>
+</LinearLayout>
