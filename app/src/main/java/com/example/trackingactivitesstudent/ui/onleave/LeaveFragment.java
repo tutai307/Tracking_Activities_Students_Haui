@@ -65,7 +65,7 @@ public class LeaveFragment extends Fragment {
         spnClass.setAdapter(classAdapter);
 
         // Hiển thị danh sách onLeave trong ListView
-        updateOnLeaveList(db);
+        updateOnLeaveList(db, studentId);
 
         // Xử lý chọn ngày
         imbCalendar.setOnClickListener(v -> showDatePicker());
@@ -77,9 +77,9 @@ public class LeaveFragment extends Fragment {
             String reason = edtReason.getText().toString();
 
             if (selectedClass != null && !date.isEmpty() && !reason.isEmpty()) {
-                db.addOnLeave(selectedClass.getId(), date, reason, 1, 0); // student_id = 1, status = 0
+                db.addOnLeave(selectedClass.getId(), date, reason, studentId, 0); // student_id = 1, status = 0
                 Toast.makeText(getContext(), "Lưu thành công", Toast.LENGTH_SHORT).show();
-                updateOnLeaveList(db);
+                updateOnLeaveList(db, studentId);
             } else {
                 Toast.makeText(getContext(), "Vui lòng điền đầy đủ thông tin", Toast.LENGTH_SHORT).show();
             }
@@ -102,8 +102,8 @@ public class LeaveFragment extends Fragment {
     }
 
     // Cập nhật danh sách onLeave
-    private void updateOnLeaveList(DatabaseHelper db) {
-        List<OnLeaveItem> onLeaveItems = db.getOnLeaves(1); // student_id = 1
+    private void updateOnLeaveList(DatabaseHelper db, int studentId) {
+        List<OnLeaveItem> onLeaveItems = db.getOnLeaves(studentId); // student_id = 1
         if (onLeaveItems.isEmpty()) {
             lsvOnLeave.setVisibility(View.GONE);
         } else {
