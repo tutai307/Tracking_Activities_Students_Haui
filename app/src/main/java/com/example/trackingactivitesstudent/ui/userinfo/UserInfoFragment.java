@@ -297,8 +297,8 @@ private void showBottomSheetDialog(UserInfoViewModel userInfo) {
         String studentCode1 = studentCodeEditText.getText().toString().trim();
         String fullname = fullnameEditText.getText().toString().trim();
         String dob = birthDateEditText.getText().toString().trim();
-        double height = Double.parseDouble(heightEditText.getText().toString().trim());
-        double weight = Double.parseDouble(weightEditText.getText().toString().trim());
+        double height = 0;
+        double weight = 0;
         String underlyingDisease = underlyingDiseaseEditText.getText().toString().trim();
 
         // Lấy giá trị giới tính từ radio group
@@ -307,6 +307,13 @@ private void showBottomSheetDialog(UserInfoViewModel userInfo) {
         // Kiểm tra dữ liệu hợp lệ
         if (fullname.isEmpty() || dob.isEmpty()) {
             Toast.makeText(getContext(), "Họ tên và ngày sinh không được để trống!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        try{
+            height = Double.parseDouble(heightEditText.getText().toString().trim());
+            weight = Double.parseDouble(weightEditText.getText().toString().trim());
+        }catch (Exception e){
+            Toast.makeText(getContext(), "Vui lòng nhập chiều cao và cân nặng đúng định dạng!", Toast.LENGTH_SHORT).show();
             return;
         }
 
