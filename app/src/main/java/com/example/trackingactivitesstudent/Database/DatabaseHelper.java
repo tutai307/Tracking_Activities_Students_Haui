@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.example.trackingactivitesstudent.ui.Physical_results.Result;
 import com.example.trackingactivitesstudent.ui.onleave.ClassItem;
 import com.example.trackingactivitesstudent.ui.onleave.OnLeaveItem;
 import com.example.trackingactivitesstudent.ui.tracking.Tracker;
@@ -255,4 +256,37 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return -1;
     }
+
+    public List<Result> getResultsByStudentId(int studentId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        List<Result> resultList = new ArrayList<>();
+
+        // Truy vấn dữ liệu từ bảng 'results' và kết nối với các bảng 'classes' và 'courses'
+        String query = "SELECT r.test1, r.midterm_score, r.exam_score, c.class_code, cs.course_name, cs.course_code " +
+                "FROM results r " +
+                "JOIN classes c ON r.class_id = c.id " +
+                "JOIN courses cs ON c.course_id = cs.id " +
+                "WHERE r.student_id = ?";
+        Cursor cursor = db.rawQuery(query, new String[] {String.valueOf(studentId)});
+
+        if (cursor.moveToFirst()) {
+            do {
+                Result result = new Result();
+                result.setTest1(cursor.getFloat(cursor.getColumnIndex("test1")));
+                result.setMidtermScore(cursor.getFloat(cursor.getColumnIndex("midterm_score")));
+                result.setExamScore(cursor.getFloat(cursor.getColumnIndex("exam_score")));
+                result.setClassCode(cursor.getString(cursor.getColumnIndex("class_code")));
+                result.setCourseName(cursor.getString(cursor.getColumnIndex("course_name")));
+                result.setCourseCode(cursor.getString(cursor.getColumnIndex("course_code")));
+
+                resultList.add(result);
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+
+        return resultList;
+    }
+
 }
