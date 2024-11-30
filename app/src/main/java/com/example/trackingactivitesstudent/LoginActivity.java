@@ -9,6 +9,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
+import android.text.InputType;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,6 +26,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button btnLogin;
     private TextView txtError;
     private SQLiteDatabase database;
+    private boolean isPasswordVisible = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +39,20 @@ public class LoginActivity extends AppCompatActivity {
         edtPassword = findViewById(R.id.edtPassword);
         btnLogin = findViewById(R.id.btnLogin);
         txtError = findViewById(R.id.txtError);
+
+        edtPassword.setOnTouchListener((v, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_UP) {
+                int drawableStart = edtPassword.getCompoundDrawables()[2] != null ? edtPassword.getCompoundDrawables()[2].getBounds().width() : 0;
+                float x = event.getX();
+
+                // Kiểm tra xem người dùng có chạm vào vị trí của icon mắt hay không
+                if (x > edtPassword.getWidth() - edtPassword.getPaddingRight() - drawableStart) {
+                    togglePasswordVisibility();
+                    return true;
+                }
+            }
+            return false;
+        });
 
         // Khởi tạo hoặc mở cơ sở dữ liệu
         database = openOrCreateDatabase("qlsv.db", MODE_PRIVATE, null);
@@ -131,6 +148,20 @@ public class LoginActivity extends AppCompatActivity {
         }
         cursor.close();
         return studentId;
+    }
+
+    private void togglePasswordVisibility() {
+        if (isPasswordVisible) {
+            // Ẩn mật khẩu
+            edtPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+            edtPassword.setCompoundDrawablesWithIntrinsicBounds(R.drawable.baseline_lock_24, 0, R.drawable.ic_eye_off, 0); // Giữ icon khóa và icon ẩn mật khẩu
+        } else {
+            // Hiển thị mật khẩu
+            edtPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+            edtPassword.setCompoundDrawablesWithIntrinsicBounds(R.drawable.baseline_lock_24, 0, R.drawable.baseline_remove_red_eye_24, 0); // Giữ icon khóa và icon hiển thị mật khẩu
+        }
+        edtPassword.setSelection(edtPassword.length()); // Đặt con trỏ ở cuối
+        isPasswordVisible = !isPasswordVisible; // Đảo trạng thái
     }
 
 
