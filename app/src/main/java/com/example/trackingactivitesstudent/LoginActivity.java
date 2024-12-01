@@ -8,8 +8,10 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -28,6 +30,7 @@ public class LoginActivity extends AppCompatActivity {
     private SQLiteDatabase database;
     private boolean isPasswordVisible = false;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +42,23 @@ public class LoginActivity extends AppCompatActivity {
         edtPassword = findViewById(R.id.edtPassword);
         btnLogin = findViewById(R.id.btnLogin);
         txtError = findViewById(R.id.txtError);
+
+        TextView txtForgotPassword = findViewById(R.id.txtForgotPassword);
+        txtForgotPassword.setOnClickListener(v -> {
+            String url = "https://sv.haui.edu.vn/help?repass=1";
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+            startActivity(intent);
+        });
+
+
+        Button btnEnroll = findViewById(R.id.btnEnroll);
+        btnEnroll.setOnClickListener(v -> {
+            String url = "https://nhaphoc.haui.edu.vn/enroll/enrolled/chao-mung-sinh-vien-nhap-hoc.htm";
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+            startActivity(intent);
+        });
+
+
 
         edtPassword.setOnTouchListener((v, event) -> {
             if (event.getAction() == MotionEvent.ACTION_UP) {
