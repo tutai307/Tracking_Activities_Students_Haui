@@ -37,17 +37,29 @@
                 android:src="@drawable/logohaui"
                 android:contentDescription="Logo Đại học Công nghiệp Hà Nội"
                 android:scaleType="centerInside"
-                android:layout_gravity="center"/>
+                android:layout_gravity="center"
+                android:background="@drawable/img_border"/>
 
             <!-- Tên trường Đại học -->
             <TextView
                 android:id="@+id/txtUniversityName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Trường Đại học Công nghiệp Hà Nội"
-                android:textColor="@color/black"
+                android:text="ĐẠI HỌC CÔNG NGHIỆP HÀ NỘI"
+                android:textColor="#003366"
                 android:textSize="18sp"
                 android:textStyle="bold"
+                android:layout_marginBottom="4dp"
+                android:gravity="center" />
+
+            <TextView
+                android:id="@+id/txtUniversityNameEnglish"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="HANOI UNIVERSITY OF INDUSTRY"
+                android:textColor="@color/red"
+                android:textStyle="bold"
+                android:textSize="12sp"
                 android:layout_marginBottom="32dp"
                 android:gravity="center" />
 
@@ -56,12 +68,13 @@
                 android:id="@+id/edtStudentCode"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Tên đăng nhập"
+                android:hint="Mã sinh viên"
                 android:inputType="text"
                 android:padding="10dp"
                 android:background="@drawable/edt_border"
-                android:drawableStart="@drawable/baseline_person_24"
-                android:layout_marginBottom="16dp"/>
+                android:drawableStart="@drawable/ic_person"
+                android:layout_marginBottom="16dp"
+                android:drawablePadding="8dp"/>
 
             <!-- Mật khẩu -->
             <EditText
@@ -74,7 +87,8 @@
                 android:background="@drawable/edt_border"
                 android:layout_marginBottom="16dp"
                 android:drawableStart="@drawable/baseline_lock_24"
-                android:drawableEnd="@drawable/baseline_remove_red_eye_24"/>
+                android:drawableEnd="@drawable/baseline_remove_red_eye_24"
+                android:drawablePadding="8dp"/>
 
             <!-- Dòng "Quên mật khẩu?" -->
             <TextView
